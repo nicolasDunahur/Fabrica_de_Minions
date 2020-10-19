@@ -7,29 +7,29 @@ class MinionTest : DescribeSpec({
 
   describe("minion  come fruta para recuperar energia") {
 
-    val empleado2 = Biclope(2)
-    val empleado1 = Ciclople(1)
+    val empleadoBiclope = Biclope(2)
+    val empleadoCiclope = Ciclople(1)
 
     it("empleado come uva "){
-      empleado1.comerFruta(Uva)
-      empleado2.comerFruta(Uva)
+      empleadoCiclope.comerFruta(Uva)
+      empleadoBiclope.comerFruta(Uva)
 
-      empleado1.estamina.shouldBe(1)
-      empleado2.estamina.shouldBe(1)
+      empleadoCiclope.estamina.shouldBe(1)
+      empleadoBiclope.estamina.shouldBe(1)
     }
     it("empleado come manzana"){
-      empleado1.comerFruta(Manzana)
-      empleado2.comerFruta(Manzana)
+      empleadoCiclope.comerFruta(Manzana)
+      empleadoBiclope.comerFruta(Manzana)
 
-      empleado1.estamina.shouldBe(5)
-      empleado2.estamina.shouldBe(5)
+      empleadoCiclope.estamina.shouldBe(5)
+      empleadoBiclope.estamina.shouldBe(5)
     }
     it("empleado como bananas"){
-      empleado1.comerFruta(Banana)
-      empleado2.comerFruta(Banana)
+      empleadoCiclope.comerFruta(Banana)
+      empleadoBiclope.comerFruta(Banana)
 
-      empleado1.estamina.shouldBe(100)
-      empleado2.estamina.shouldBe(10)
+      empleadoCiclope.estamina.shouldBe(100)
+      empleadoBiclope.estamina.shouldBe(10)
     }
 
 
