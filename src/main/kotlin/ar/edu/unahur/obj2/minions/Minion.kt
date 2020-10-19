@@ -1,48 +1,23 @@
 package ar.edu.unahur.obj2.minions
 
-import jdk.internal.joptsimple.internal.Strings
+import kotlin.properties.Delegates
 
-class Minion(var clase: Clase, val raza: Raza,var estamina: Float,var danio: Float) {
-    fun estaContento() = estamina >= 30
-    //fun defender(estamina: Float) =
+abstract class Minion(val ojos: Int,var estamina: Int) : Empleado{
+
+    fun comerFruta(fruta:Fruta) { estamina += fruta.energia }
+
 }
+class Biclope(ojos: Int,estamina: Int) : Minion(ojos,estamina){
 
-abstract class Clase {
-    //open fun defender() = (estamina/2) + 2
-}
-
-class Soldado : Clase() {
-    val arma = String()
-    //var danioMejorando = danio
-    //override fun defender() {
-
-    //    this.ganarPractica()
-    //}
-
-    //fun ganarPractica() = danioMejorando + 2
-}
-
-object Obrero : Clase() {
-    var cinturon =  mutableListOf<Strings>()
-
+    override fun puedeRealizarTarea() = true
 
 }
 
-object Limpiador : Clase() {
-    //override fun defender(): Nothing = throw Exception("Me niego")
+class Ciclople(ojos: Int,estamina: Int) : Minion(ojos,estamina){
+
+    override fun puedeRealizarTarea() = true
 
 }
 
-interface Raza
 
-object Biclopes: Raza {
-    val ojos = 2
-    val punteria = 1
-    fun estamina(estamina: Int) = estamina.plus(10)
-}
 
-object Ciclopes: Raza {
-    val ojos = 1
-    val punteria = 0.5
-    var estamina = Float
-}
