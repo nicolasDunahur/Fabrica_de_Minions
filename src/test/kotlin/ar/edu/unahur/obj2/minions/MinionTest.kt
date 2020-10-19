@@ -7,8 +7,8 @@ class MinionTest : DescribeSpec({
 
   describe("minion  come fruta para recuperar energia") {
 
-    val empleadoBiclope = Biclope(2)
-    val empleadoCiclope = Ciclople(1)
+    val empleadoBiclope = Biclope(2,0)
+    val empleadoCiclope = Ciclople(1,0)
 
     it("empleado come uva "){
       empleadoCiclope.comerFruta(Uva)
