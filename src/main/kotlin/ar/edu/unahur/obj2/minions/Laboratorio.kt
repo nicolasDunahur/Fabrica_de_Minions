@@ -8,3 +8,7 @@ object Laboratorio {
 
 }
 
+
+class Sector(val esGrande: Boolean, val estaLimpio: Boolean,val gradoDeAmenaza: Int)
+
+class Maquina(val complejidad: Int)

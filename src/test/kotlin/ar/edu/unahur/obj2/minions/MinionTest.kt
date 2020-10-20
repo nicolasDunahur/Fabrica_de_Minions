@@ -34,4 +34,26 @@ class MinionTest : DescribeSpec({
 
 
   }
+
+  describe("ejemplos- no del parcial"){
+    val sector1 = Sector(true,true,4)
+
+    it("un Bíclope Soldado con 10 de estamina y 4 de daño extra"){
+      val mimBiclople = Biclope(Soldado,10)
+      mimBiclople.defender(sector1)
+      mimBiclople.defender(sector1)
+      mimBiclople.fuerza().shouldBe(11)
+    }
+    // debe redondear para abajo y el int aparentemente lo hace
+    it("Cíclope Soldado estamina 10, daño extra 4") {
+      val minCiclo = Ciclople(Soldado,10)
+      minCiclo.defender(sector1)
+      minCiclo.defender(sector1)
+      minCiclo.fuerza().shouldBe(5)
+    }
+
+
+  }
+
+
 })

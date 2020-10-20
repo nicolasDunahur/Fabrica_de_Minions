@@ -3,7 +3,7 @@ package ar.edu.unahur.obj2.minions
 import kotlin.math.min
 
 abstract class Minion(var rol: Rol, var estamina: Int=0) {
-    val tareaRealizadas = mutableListOf<String>()
+    val tareaRealizadas = mutableListOf<Rol>()
 
     abstract fun puedeRealizarTarea() : Boolean
 
@@ -14,6 +14,10 @@ abstract class Minion(var rol: Rol, var estamina: Int=0) {
     fun defender(unSector:Sector) {
         rol.defender(unSector, this)
     }
+
+    open fun fuerza() = rol.fuerza(this)
+
+
 
 }
 
@@ -33,6 +37,10 @@ class Ciclople(rol: Rol,estamina: Int) : Minion(rol,estamina) {
 
     override fun comerFruta(fruta: Fruta){
         estamina += fruta.energia
+    }
+
+    override fun fuerza(): Int {
+        return super.fuerza()/2
     }
 }
 
