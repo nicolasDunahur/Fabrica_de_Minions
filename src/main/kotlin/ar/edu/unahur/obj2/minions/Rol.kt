@@ -1,13 +1,21 @@
 package ar.edu.unahur.obj2.minions
 
-import javax.management.relation.Role
+interface Rol{}
 
-interface Rol {
+object Soldado: Rol {
+    var danio = 0
+
+    fun usarArma(){
+        danio += 2
+    }
+
+}
+object Obrero : Rol{
+    val herramientas = mutableListOf<String>()
 
 
 }
+object Limpiador: Rol  {
 
-object Soldado : Rol
-object Obreto : Rol
-object Limpiador : Rol
+}
 
