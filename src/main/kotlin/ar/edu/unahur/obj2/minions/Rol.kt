@@ -20,9 +20,7 @@ object Soldado : Rol() {
     override fun defender(unSector: Sector, minion: Minion) {
         this.ganarExperiencia()
     }
-
 }
-
 
 object Obrero : Rol() {
     var herramientas =  mutableListOf<String>()
@@ -34,7 +32,6 @@ object Obrero : Rol() {
         minion.estamina = (minion.estamina / 2)
     }
 }
-
 
 object Limpiador : Rol() {
     override fun defender(unSector: Sector, minion: Minion) = throw Exception("Me niego")
