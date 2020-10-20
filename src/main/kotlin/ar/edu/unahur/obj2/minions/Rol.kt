@@ -1,21 +1,35 @@
 package ar.edu.unahur.obj2.minions
 
-interface Rol{}
 
-object Soldado: Rol {
-    var danio = 0
 
-    fun usarArma(){
-        danio += 2
+abstract class Rol {
+    open fun fuerza(minion: Minion) = (minion.estamina/2) + 2
+    open fun puedeDefender(unSector: Sector, unMinion: Minion) = unSector.gradoDeAmenaza <= this.fuerza(unMinion)
+    abstract fun defender(unSector: Sector, minion: Minion)
+}
+
+object Soldado : Rol() {
+    val arma = String()
+    var danioExtra = 0
+
+    fun ganarExperiencia() { danioExtra += 2 }
+
+    override fun fuerza(minion: Minion): Int {
+        return super.fuerza(minion) + danioExtra
+    }
+
+    override fun defender(unSector: Sector, minion: Minion) {
+        this.ganarExperiencia()
     }
 
 }
-object Obrero : Rol{
-    val herramientas = mutableListOf<String>()
 
-
-}
-object Limpiador: Rol  {
-
+object Obrero : Rol() {
+    var herramientas =  mutableListOf<String>()
+    override fun defender(unSector: Sector, minion: Minion) {
+    }
 }
 
+object Limpiador : Rol() {
+    override fun defender(unSector: Sector, minion: Minion) = throw Exception("Me niego")
+}

@@ -2,26 +2,35 @@ package ar.edu.unahur.obj2.minions
 
 import kotlin.math.min
 
-abstract class Minion(val ojos: Int) {
-   var estamina :Int = 0
+abstract class Minion(var rol: Rol, var estamina: Int=0) {
+    val tareaRealizadas = mutableListOf<String>()
 
     abstract fun puedeRealizarTarea() : Boolean
+
     open fun comerFruta(fruta:Fruta) {
         estamina += fruta.energia
     }
+
+    fun defender(unSector:Sector) {
+        rol.defender(unSector, this)
+    }
+
 }
 
-class Biclope(ojos: Int) : Minion(ojos){
 
+class Biclope(rol: Rol,estamina: Int) : Minion(rol,estamina) {
+    val ojos: Int = 2
     override fun puedeRealizarTarea() = true
+
     override fun comerFruta(fruta: Fruta){
         estamina = min(10, fruta.energia + estamina)
     }
 }
 
-class Ciclople(ojos: Int) : Minion(ojos) {
-
+class Ciclople(rol: Rol,estamina: Int) : Minion(rol,estamina) {
+    val ojos: Int = 1
     override fun puedeRealizarTarea() = true
+
     override fun comerFruta(fruta: Fruta){
         estamina += fruta.energia
     }
