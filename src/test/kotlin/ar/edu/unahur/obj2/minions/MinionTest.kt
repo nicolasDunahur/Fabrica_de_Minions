@@ -38,8 +38,7 @@ class MinionTest : DescribeSpec({
     }
     describe("experiencia que tiene los empleados por realizar tareas"){
 
-      val maquinaQuimica = Maquina(5)
-      val arreglarQuimica = ArreglarMaquina(mutableListOf("destornillador"),maquinaQuimica)
+      val arreglarQuimica = ArreglarMaquina(mutableListOf("destornillador"),5)
 
       repeat(2){
         Laboratorio.enviarTarea(empleadoCiclope,arreglarQuimica)
@@ -56,15 +55,13 @@ class MinionTest : DescribeSpec({
     }
 
     describe("si lo empleados pueden realizar las tareas asignadas"){
-      val pc = Maquina(5)
-      val repararPc = ArreglarMaquina(mutableListOf("cd"),pc)
+      val repararPc = ArreglarMaquina(mutableListOf("cd"),5)
 
       it("empleado ciclope puede realizar tarea de reparacion "){
         repararPc.puedeSerRealizada(empleadoCiclope).shouldBeFalse()
       }
 
-      val torno = Maquina(25)
-      val repararTorno = ArreglarMaquina(mutableListOf(),torno)
+      val repararTorno = ArreglarMaquina(mutableListOf(),25)
 
       it("empleadoCiclope puede realizar tarea de raparacion "){
         repararTorno.puedeSerRealizada(empleadoCiclope).shouldBeTrue()
@@ -82,16 +79,16 @@ class MinionTest : DescribeSpec({
 
     it("un Bíclope Soldado con 10 de estamina y 4 de daño extra"){
       val mimBiclople = Biclope(Soldado,10)
-      mimBiclople.defender(sector1)
-      mimBiclople.defender(sector1)
+      mimBiclople.defender()
+      mimBiclople.defender()
       mimBiclople.fuerza().shouldBe(11)
     }
 
     it("Cíclope Soldado estamina 10, daño extra 4") {
 
       val minCiclo = Ciclople(Soldado,10)
-      minCiclo.defender(sector1)
-      minCiclo.defender(sector1)
+      minCiclo.defender()
+      minCiclo.defender()
       minCiclo.fuerza().shouldBe(5)
     }
 

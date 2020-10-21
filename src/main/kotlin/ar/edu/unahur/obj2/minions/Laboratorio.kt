@@ -11,7 +11,6 @@ object Laboratorio{
 
 }
 
-class Maquina(val complejidad: Int)
 
 
 

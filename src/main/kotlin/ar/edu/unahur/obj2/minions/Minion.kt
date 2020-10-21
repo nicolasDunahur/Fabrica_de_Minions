@@ -9,13 +9,14 @@ abstract class Minion(var rol: Rol,var estamina: Int=0) {
     open fun comerFruta(fruta:Fruta) {
         estamina += fruta.energia
     }
-    fun defender(unSector:Sector) {
-        rol.defender(unSector, this)
+    fun defender() {
+        rol.defender(this)
     }
 
 
     open fun fuerza() = rol.fuerza(this)
     fun experiencia() = tareaRealizadas.size * tareaRealizadas.sumBy { it -> it.dificultad }
+    fun disminuirEstamina(complejidad: Int) { estamina -= complejidad}
 
 
 
