@@ -27,7 +27,7 @@ object Obrero : Rol() {
         this.perderlaMitadDeLaEstamina(minion)
     }
     fun perderlaMitadDeLaEstamina(minion: Minion) {
-        minion.estamina = (minion.estamina / 2)
+        minion.disminuirEstamina((minion.estamina / 2))
     }
 }
 

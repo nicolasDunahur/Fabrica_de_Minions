@@ -42,8 +42,10 @@ class DefenderSector(val sector: Sector) : Tarea(){
     }
 }
 
+object difucultadPorGremio { var dificultad = 10 }
+
 class LimpiarSector(val sector: Sector) : Tarea(){
-    override var dificultad = 10
+    override var dificultad = difucultadPorGremio.dificultad
 
     override fun puedeSerRealizada(minion: Minion) =
             this.tamanioYEstamina(minion) || this.esLimpiador(minion)
@@ -55,7 +57,7 @@ class LimpiarSector(val sector: Sector) : Tarea(){
     fun esLimpiador(minion: Minion) =
             minion.rol == Limpiador
 
-    //  muchos if y analizar si el profe lo quiere asi. nombres feos de funciones
+    //  muchos if y analizar si el profe lo quiere asi. nombres feos de funciones. mucho codigo
     override fun realizarsePor(minion: Minion) {
         if (this.esLimpiador(minion)) {
             sector.serLimpiado()
@@ -71,6 +73,4 @@ class LimpiarSector(val sector: Sector) : Tarea(){
             throw Exception ("No le dá")
         }
     }
-
-
 }
