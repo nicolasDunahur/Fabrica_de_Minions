@@ -1,15 +1,18 @@
 package ar.edu.unahur.obj2.minions
 
 import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.matchers.collections.shouldContain
+import io.kotest.matchers.booleans.shouldBeFalse
+import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
 
 class MinionTest : DescribeSpec({
 
   describe("minion  come fruta para recuperar energia") {
-    Laboratorio.rolAsignado = Limpiador
-    val empleadoBiclope = Biclope(0)
-    val empleadoCiclope = Ciclople(50)
+
+
+    Laboratorio.rolAsignado = Obrero
+    val empleadoBiclope = Biclope(Obrero,0)
+    val empleadoCiclope = Ciclople(Obrero,50)
 
 
     it("empleado come uva ") {
@@ -35,30 +38,47 @@ class MinionTest : DescribeSpec({
     }
     describe("experiencia que tiene los empleados por realizar tareas"){
 
-      val repararMaquina = ArreglarMaquina(mutableListOf(),10)
+      val maquinaQuimica = ArreglarMaquina(mutableListOf("destornillador"),5)
 
       repeat(2){
-        Laboratorio.enviarTarea(empleadoCiclope,repararMaquina)
+        Laboratorio.enviarTarea(empleadoCiclope,maquinaQuimica)
       }
+
       it("total de experiencia adquirida por el empleadoBiclope"){
         empleadoBiclope.experiencia().shouldBe(0)
 
       }
-      it("experiencia del ciclope, no realizo ninguna tarea"){
+      it("experiencia del ciclope, realizo 2 tareas de reparacion"){
         empleadoCiclope.experiencia().shouldBe(40)
 
-        empleadoBiclope.rol.shouldBe(Limpiador)
       }
     }
-  }
 
+    describe("si lo empleados pueden realizar las tareas asignadas"){
+      val pc = ArreglarMaquina(mutableListOf("cd"),5)
+
+      it("empleado ciclope puede realizar tarea de reparacion "){
+        pc.tareaPuedeSerRealizada(empleadoCiclope).shouldBeFalse()
+      }
+
+      val maquina = ArreglarMaquina(mutableListOf(),25)
+
+      it("empleadoCiclope puede realizar tarea de raparacion "){
+        maquina.tareaPuedeSerRealizada(empleadoCiclope).shouldBeTrue()
+      }
+    }
+    describe("si el empleado puede defender el sector"){
+
+    }
+
+  }
 
   describe("ejemplos- no del parcial"){
     Laboratorio.rolAsignado = Soldado
     val sector1 = Sector(true,true,4)
 
     it("un Bíclope Soldado con 10 de estamina y 4 de daño extra"){
-      val mimBiclople = Biclope(10)
+      val mimBiclople = Biclope(Soldado,10)
       mimBiclople.defender(sector1)
       mimBiclople.defender(sector1)
       mimBiclople.fuerza().shouldBe(11)
@@ -66,7 +86,7 @@ class MinionTest : DescribeSpec({
     // debe redondear para abajo y el int aparentemente lo hace
     it("Cíclope Soldado estamina 10, daño extra 4") {
 
-      val minCiclo = Ciclople(10)
+      val minCiclo = Ciclople(Soldado,10)
       minCiclo.defender(sector1)
       minCiclo.defender(sector1)
       //minCiclo.fuerza().shouldBe(5)

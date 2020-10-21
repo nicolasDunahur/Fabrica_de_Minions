@@ -1,9 +1,13 @@
 package ar.edu.unahur.obj2.minions
 
-abstract class Rol {
+abstract class Rol() {
+    open var herramientas = mutableListOf<String> ()
+
     open fun fuerza(minion: Minion) = (minion.estamina/2) + 2
     open fun puedeDefender(unSector: Sector, unMinion: Minion) = unSector.gradoDeAmenaza <= this.fuerza(unMinion)
     abstract fun defender(unSector: Sector, minion: Minion)
+
+
 }
 
 
@@ -23,7 +27,7 @@ object Soldado : Rol() {
 }
 
 object Obrero : Rol() {
-    var herramientas =  mutableListOf<String>()
+    override var herramientas =  mutableListOf<String>("pala","serrucho","martillo","destornillador")
     override fun defender(unSector: Sector, minion: Minion) {
         this.perderlaMitadDeLaEstamina(minion)
     }

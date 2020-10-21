@@ -2,10 +2,9 @@ package ar.edu.unahur.obj2.minions
 
 import kotlin.math.min
 
-abstract class Minion(var estamina: Int=0) {
+abstract class Minion(var rol: Rol,var estamina: Int=0) {
 
     var tareaRealizadas = mutableListOf<Tarea>()
-    var rol = Laboratorio.rolAsignado
 
     open fun comerFruta(fruta:Fruta) {
         estamina += fruta.energia
@@ -16,19 +15,22 @@ abstract class Minion(var estamina: Int=0) {
 
 
     open fun fuerza() = rol.fuerza(this)
-    fun experiencia() = tareaRealizadas.size * tareaRealizadas.sumBy { it -> it.dificultad}
+    fun experiencia() = tareaRealizadas.size * tareaRealizadas.sumBy { it -> it.dificultad }
+    fun puedeRealizarTarea(tarea: Tarea) = true
 
 }
 
-class Biclope(estamina: Int) : Minion(estamina) {
+class Biclope(rol: Rol, estamina: Int) : Minion(rol, estamina) {
     val ojos: Int = 2
 
     override fun comerFruta(fruta: Fruta){
         estamina = min(10, fruta.energia + estamina)
     }
+
+
 }
 
-class Ciclople(estamina: Int) : Minion(estamina) {
+class Ciclople(rol: Rol, estamina: Int) : Minion(rol, estamina) {
     val ojos: Int = 1
 
     override fun comerFruta(fruta: Fruta){
@@ -38,6 +40,7 @@ class Ciclople(estamina: Int) : Minion(estamina) {
     override fun fuerza(): Int {
         return super.fuerza()/2
     }
+
 }
 
 
