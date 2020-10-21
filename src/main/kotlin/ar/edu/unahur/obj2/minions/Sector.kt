@@ -1,3 +1,8 @@
 package ar.edu.unahur.obj2.minions
 
-class Sector(val esGrande: Boolean, val estaLimpio: Boolean,val gradoDeAmenaza: Int)
+class Sector(val esGrande: Boolean, var estaLimpio: Boolean,var gradoDeAmenaza: Int) {
+    fun defendido() {
+        var gradoDeAmenaza = 0
+        var estaLimpio = false
+    }
+}

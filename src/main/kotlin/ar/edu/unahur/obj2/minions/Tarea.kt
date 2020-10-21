@@ -5,7 +5,6 @@ abstract class Tarea() {
     abstract fun puedeSerRealizada(minion: Minion):Boolean
     abstract fun realizarsePor(minion: Minion)
 
-
 }
 
 class ArreglarMaquina(val herramientas: MutableList<String>, val complejidad: Int) : Tarea(){
@@ -23,15 +22,14 @@ class ArreglarMaquina(val herramientas: MutableList<String>, val complejidad: In
     override fun realizarsePor(minion: Minion) {
         if (this.puedeSerRealizada(minion))
                 minion.disminuirEstamina(complejidad)
-        // preguntar si puede tener estamina negativa
     }
 
 }
 
 
 
-class DefenderSector(var amenaza: Int, val esGrande: Boolean, var estaLimpio: Boolean) : Tarea(){
-    override var dificultad = amenaza // incompleto
+class DefenderSector(val sector: Sector) : Tarea(){
+    override var dificultad = sector.gradoDeAmenaza // incompleto
 
     override fun puedeSerRealizada(minion: Minion) =
             minion.fuerza()>= dificultad // &&  minion.rol <==> Limpiador()
@@ -39,15 +37,22 @@ class DefenderSector(var amenaza: Int, val esGrande: Boolean, var estaLimpio: Bo
     override fun realizarsePor(minion: Minion) {
         if (this.puedeSerRealizada(minion)) {
             minion.defender()
-            var amenaza = 0
-            var estaLimpio = false
+            sector.defendido()
         }
     }
+}
 
+class LimpiarSector(val sector: Sector) : Tarea(){
+    override var dificultad = 10
+    override fun puedeSerRealizada(minion: Minion) =
+            this.mayorA4YGrande(minion) || this.esLimpiador()
 
+    fun mayorA4YGrande(minion: Minion) =
+            minion.estamina >= 4 && sector.esGrande
+
+    fun esLimpiador(minion: Minion) =
+            minion.rol == Limpiador
 
 
 
 }
-
-// class LimpiarSector() : Tarea()
