@@ -6,8 +6,6 @@ abstract class Rol() {
     open fun fuerza(minion: Minion) = (minion.estamina/2) + 2
     open fun puedeDefender(unSector: Sector, unMinion: Minion) = unSector.gradoDeAmenaza <= this.fuerza(unMinion)
     abstract fun defender(unSector: Sector, minion: Minion)
-
-
 }
 
 

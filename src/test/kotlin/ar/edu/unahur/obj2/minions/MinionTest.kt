@@ -38,10 +38,11 @@ class MinionTest : DescribeSpec({
     }
     describe("experiencia que tiene los empleados por realizar tareas"){
 
-      val maquinaQuimica = ArreglarMaquina(mutableListOf("destornillador"),5)
+      val maquinaQuimica = Maquina(5)
+      val arreglarQuimica = ArreglarMaquina(mutableListOf("destornillador"),maquinaQuimica)
 
       repeat(2){
-        Laboratorio.enviarTarea(empleadoCiclope,maquinaQuimica)
+        Laboratorio.enviarTarea(empleadoCiclope,arreglarQuimica)
       }
 
       it("total de experiencia adquirida por el empleadoBiclope"){
@@ -55,16 +56,18 @@ class MinionTest : DescribeSpec({
     }
 
     describe("si lo empleados pueden realizar las tareas asignadas"){
-      val pc = ArreglarMaquina(mutableListOf("cd"),5)
+      val pc = Maquina(5)
+      val repararPc = ArreglarMaquina(mutableListOf("cd"),pc)
 
       it("empleado ciclope puede realizar tarea de reparacion "){
-        empleadoCiclope.puedeRealizarTarea(pc).shouldBeFalse()
+        repararPc.puedeSerRealizada(empleadoCiclope).shouldBeFalse()
       }
 
-      val maquina = ArreglarMaquina(mutableListOf(),25)
+      val torno = Maquina(25)
+      val repararTorno = ArreglarMaquina(mutableListOf(),torno)
 
       it("empleadoCiclope puede realizar tarea de raparacion "){
-        maquina.puedeRepararMaquina(empleadoCiclope).shouldBeTrue()
+        repararTorno.puedeSerRealizada(empleadoCiclope).shouldBeTrue()
       }
     }
     describe("si el empleado puede defender el sector"){
@@ -73,7 +76,7 @@ class MinionTest : DescribeSpec({
 
   }
 
-  describe("ejemplos- no del parcial"){
+  describe("Fuerza - ejemplo"){
     Laboratorio.rolAsignado = Soldado
     val sector1 = Sector(true,true,4)
 
@@ -83,13 +86,13 @@ class MinionTest : DescribeSpec({
       mimBiclople.defender(sector1)
       mimBiclople.fuerza().shouldBe(11)
     }
-    // debe redondear para abajo y el int aparentemente lo hace
+
     it("Cíclope Soldado estamina 10, daño extra 4") {
 
       val minCiclo = Ciclople(Soldado,10)
       minCiclo.defender(sector1)
       minCiclo.defender(sector1)
-      //minCiclo.fuerza().shouldBe(5)
+      minCiclo.fuerza().shouldBe(5)
     }
 
 
