@@ -6,7 +6,7 @@ object Laboratorio{
 
 
     fun enviarTarea(minion: Minion, tarea: Tarea) =
-            if (tarea.tareaPuedeSerRealizada(minion)) minion.tareaRealizadas.add(tarea)
+            if (tarea.puedeRealizarTarea(minion)) minion.tareaRealizadas.add(tarea)
             else throw Exception("no puede realizarla la tarea no cumple con los requisitos....")
 
 }

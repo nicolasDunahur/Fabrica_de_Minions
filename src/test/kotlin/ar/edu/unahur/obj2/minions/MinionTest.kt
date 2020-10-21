@@ -58,13 +58,13 @@ class MinionTest : DescribeSpec({
       val pc = ArreglarMaquina(mutableListOf("cd"),5)
 
       it("empleado ciclope puede realizar tarea de reparacion "){
-        pc.tareaPuedeSerRealizada(empleadoCiclope).shouldBeFalse()
+        empleadoCiclope.puedeRealizarTarea(pc).shouldBeFalse()
       }
 
       val maquina = ArreglarMaquina(mutableListOf(),25)
 
       it("empleadoCiclope puede realizar tarea de raparacion "){
-        maquina.tareaPuedeSerRealizada(empleadoCiclope).shouldBeTrue()
+        maquina.puedeRepararMaquina(empleadoCiclope).shouldBeTrue()
       }
     }
     describe("si el empleado puede defender el sector"){
