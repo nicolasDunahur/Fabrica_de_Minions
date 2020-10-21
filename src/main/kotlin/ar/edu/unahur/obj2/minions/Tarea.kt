@@ -29,10 +29,10 @@ class ArreglarMaquina(val herramientas: MutableList<String>, val complejidad: In
 
 
 class DefenderSector(val sector: Sector) : Tarea(){
-    override var dificultad = sector.gradoDeAmenaza // incompleto
+    override var dificultad = sector.gradoDeAmenaza // incompleto, no se como encararlo
 
     override fun puedeSerRealizada(minion: Minion) =
-            minion.fuerza()>= dificultad // &&  minion.rol <==> Limpiador()
+            minion.fuerza()>= dificultad // &&  minion.rol <==> Limpiador() como hacer el diferente?
 
     override fun realizarsePor(minion: Minion) {
         if (this.puedeSerRealizada(minion)) {
@@ -44,15 +44,33 @@ class DefenderSector(val sector: Sector) : Tarea(){
 
 class LimpiarSector(val sector: Sector) : Tarea(){
     override var dificultad = 10
-    override fun puedeSerRealizada(minion: Minion) =
-            this.mayorA4YGrande(minion) || this.esLimpiador()
 
-    fun mayorA4YGrande(minion: Minion) =
+    override fun puedeSerRealizada(minion: Minion) =
+            this.tamanioYEstamina(minion) || this.esLimpiador(minion)
+
+    fun tamanioYEstamina(minion: Minion) =
             minion.estamina >= 4 && sector.esGrande
+                    || minion.estamina >= 1 && sector.esGrande == false
 
     fun esLimpiador(minion: Minion) =
             minion.rol == Limpiador
 
+    //  muchos if y analizar si el profe lo quiere asi. nombres feos de funciones
+    override fun realizarsePor(minion: Minion) {
+        if (this.esLimpiador(minion)) {
+            sector.serLimpiado()
+        } else {
+            this.realizarseiNoEsLimpiadorYPuede(minion)
+        }
+    }
+    fun realizarseiNoEsLimpiadorYPuede(minion: Minion) {
+        if (this.puedeSerRealizada(minion)) {
+            sector.serLimpiado()
+            minion.disminuirEstamina(dificultad)
+        }else {
+            throw Exception ("No le dá")
+        }
+    }
 
 
 }
