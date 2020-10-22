@@ -9,7 +9,7 @@ abstract class Minion(var rol: Rol,var estamina: Int) {
     open fun comerFruta(fruta:Fruta) {
         estamina += fruta.energia
     }
-    //fun defender(unSector:Sector) { rol.defender(this) }
+    fun defender(unSector:Sector) { rol.defender(this) }
 
     fun disminuirEstamina(cuanto: Int) { estamina -= cuanto}
 

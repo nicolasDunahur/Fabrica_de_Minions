@@ -106,9 +106,9 @@ class MinionTest : DescribeSpec({
             val obreroBiclope = Biclope(Obrero, 10)
             val obreroCicople = Ciclople(Obrero,100)
 
-            defensa.puededefender(obreroBiclope).shouldBeFalse()
+            defensa.puedeSerRealizada(obreroBiclope).shouldBeFalse()
 
-            defensa.puededefender(obreroCicople).shouldBeTrue()
+            defensa.puedeSerRealizada(obreroCicople).shouldBeTrue()
           }
         }
         describe("empleados con rol soldado"){
