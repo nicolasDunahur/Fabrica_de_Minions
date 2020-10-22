@@ -1,10 +1,12 @@
 package ar.edu.unahur.obj2.minions
 
 abstract class Rol() {
-    open var herramientas = mutableListOf<String> ()
+
+    open var herramientas = mutableListOf<String>()
+
     open fun fuerza(minion: Minion) = (minion.estamina/2) + 2
-    open fun puedeDefender(unSector: Sector, unMinion: Minion) = unSector.gradoDeAmenaza <= this.fuerza(unMinion)
-    abstract fun defender(minion: Minion)
+    fun puedeDefender(unSector: Sector, unMinion: Minion) = unSector.gradoDeAmenaza <= this.fuerza(unMinion)
+    open fun defender(minion: Minion) {}
 }
 
 

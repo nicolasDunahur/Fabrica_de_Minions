@@ -1,42 +1,45 @@
 package ar.edu.unahur.obj2.minions
 
 abstract class Tarea() {
-    abstract var dificultad: Int
-    abstract fun puedeSerRealizada(minion: Minion):Boolean
+
+
+    abstract val dificultad: Int
     abstract fun realizarsePor(minion: Minion)
+    abstract fun puedeSerRealizada(minion: Minion):Boolean
+
+
 
 }
 
 class ArreglarMaquina(val herramientas: MutableList<String>, val complejidad: Int) : Tarea(){
-    override var dificultad = complejidad * 2
 
-    override fun puedeSerRealizada(minion: Minion): Boolean =
-            this.estaminaMayorAComplejidad(minion) && this.tieneHerramientas(minion)
+    override fun puedeSerRealizada(minion: Minion): Boolean = puedeRepararMaquina(minion)
 
-    fun estaminaMayorAComplejidad(minion: Minion) =
-            minion.estamina >= complejidad
 
-    fun tieneHerramientas(minion: Minion) =
-            herramientas.all { it in minion.rol.herramientas}
+    override val dificultad = complejidad * 2
+
+    fun puedeRepararMaquina(minion: Minion) = minion.estamina >= complejidad && tieneHerramientas(minion)
+    fun tieneHerramientas(minion: Minion) = herramientas.all { it in minion.rol.herramientas}
+    fun repararMaquina(minion: Minion) { if (puedeRepararMaquina(minion)) minion.estamina -= complejidad }
 
     override fun realizarsePor(minion: Minion) {
         if (this.puedeSerRealizada(minion))
-                minion.disminuirEstamina(complejidad)
+            minion.disminuirEstamina(complejidad)
     }
+
 
 }
 
-
-
 class DefenderSector(val sector: Sector) : Tarea(){
+
     override var dificultad = sector.gradoDeAmenaza // incompleto, no se como encararlo
 
     override fun puedeSerRealizada(minion: Minion) =
-            minion.fuerza()>= dificultad // &&  minion.rol <==> Limpiador() como hacer el diferente?
+            minion.fuerza >= dificultad // &&  minion.rol <==> Limpiador() como hacer el diferente?
 
     override fun realizarsePor(minion: Minion) {
         if (this.puedeSerRealizada(minion)) {
-            minion.defender()
+            //minion.defender(sector)
             sector.defendido()
         }
     }
@@ -45,14 +48,15 @@ class DefenderSector(val sector: Sector) : Tarea(){
 object difucultadPorGremio { var dificultad = 10 }
 
 class LimpiarSector(val sector: Sector) : Tarea(){
+
+
     override var dificultad = difucultadPorGremio.dificultad
 
     override fun puedeSerRealizada(minion: Minion) =
             this.tamanioYEstamina(minion) || this.esLimpiador(minion)
 
     fun tamanioYEstamina(minion: Minion) =
-            minion.estamina >= 4 && sector.esGrande
-                    || minion.estamina >= 1 && sector.esGrande == false
+            minion.estamina >= 4 && sector.esGrande || minion.estamina >= 1 && !sector.esGrande
 
     fun esLimpiador(minion: Minion) =
             minion.rol == Limpiador
@@ -74,3 +78,5 @@ class LimpiarSector(val sector: Sector) : Tarea(){
         }
     }
 }
+
+

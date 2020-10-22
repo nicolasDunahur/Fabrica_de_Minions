@@ -1,4 +1,8 @@
+import ar.edu.unahur.obj2.minions.Biclope
+import ar.edu.unahur.obj2.minions.Laboratorio
+import ar.edu.unahur.obj2.minions.Obrero
 import io.kotest.matchers.reflection.beAbstract
+import io.kotest.matchers.shouldBe
 import kotlin.math.max
 import kotlin.math.min
 
@@ -8,17 +12,5 @@ import kotlin.math.min
 // OJO: lo que esté aquí no será tenido en cuenta
 // en la corrección ni reemplaza a los tests.
 
-
- open class Ave(){
-     var energia: Int = 0
-}
-object pepita :Ave(){
-    fun comer(){
-        energia = min(10, energia +2)
-    }
-}
-pepita.energia
-repeat(10){pepita.comer()}
-pepita.energia
 
 

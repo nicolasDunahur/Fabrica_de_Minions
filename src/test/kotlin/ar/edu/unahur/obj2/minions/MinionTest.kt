@@ -1,6 +1,7 @@
 package ar.edu.unahur.obj2.minions
 
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.core.spec.style.describeSpec
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
@@ -9,10 +10,11 @@ class MinionTest : DescribeSpec({
 
   describe("minion  come fruta para recuperar energia") {
 
+    val laboratorio = Laboratorio()
 
-    Laboratorio.rolAsignado = Obrero
-    val empleadoBiclope = Biclope(Obrero,0)
-    val empleadoCiclope = Ciclople(Obrero,50)
+
+    val empleadoBiclope = Biclope(Obrero, 0)
+    val empleadoCiclope = Ciclople(Obrero, 50)
 
 
     it("empleado come uva ") {
@@ -36,64 +38,78 @@ class MinionTest : DescribeSpec({
       empleadoCiclope.estamina.shouldBe(150)
       empleadoBiclope.estamina.shouldBe(10)
     }
-    describe("experiencia que tiene los empleados por realizar tareas"){
+    describe("experiencia que tiene los empleados por realizar tareas") {
 
-      val arreglarQuimica = ArreglarMaquina(mutableListOf("destornillador"),5)
+      val maquinaQuimica = ArreglarMaquina(mutableListOf("destornillador"), 5)
 
-      repeat(2){
-        Laboratorio.enviarTarea(empleadoCiclope,arreglarQuimica)
+      repeat(2) {
+        laboratorio.enviarTarea(empleadoCiclope, maquinaQuimica)
       }
 
-      it("total de experiencia adquirida por el empleadoBiclope"){
+      it("total de experiencia adquirida por el empleadoBiclope") {
         empleadoBiclope.experiencia().shouldBe(0)
 
       }
-      it("experiencia del ciclope, realizo 2 tareas de reparacion"){
+      it("experiencia del ciclope, realizo 2 tareas de reparacion") {
         empleadoCiclope.experiencia().shouldBe(40)
 
       }
     }
 
-    describe("si lo empleados pueden realizar las tareas asignadas"){
-      val repararPc = ArreglarMaquina(mutableListOf("cd"),5)
+    describe("si lo empleados pueden realizar las tareas asignadas") {
+      val pc = ArreglarMaquina(mutableListOf("cd", "tester"), 5)
 
-      it("empleado ciclope puede realizar tarea de reparacion "){
-        repararPc.puedeSerRealizada(empleadoCiclope).shouldBeFalse()
+      it("empleado ciclope no puede realizar tarea de reparacion, no tiene la herramientas necesarias ") {
+        empleadoCiclope.puedeRealizarTarea(pc).shouldBeFalse()
       }
 
-      val repararTorno = ArreglarMaquina(mutableListOf(),25)
+      val maquina = ArreglarMaquina(mutableListOf(), 25)
 
-      it("empleadoCiclope puede realizar tarea de raparacion "){
-        repararTorno.puedeSerRealizada(empleadoCiclope).shouldBeTrue()
+      it("empleadoCiclope puede realizar tarea de raparacion ") {
+
+        empleadoCiclope.puedeRealizarTarea(maquina).shouldBeTrue()
       }
-    }
-    describe("si el empleado puede defender el sector"){
+
+      describe("si el empleado puede defender el sector") {
+        val sectorA = Sector(true,false,20)
+        val defensa = DefenderSector(sectorA)
+
+        describe(" el empleado no puede realizar la tarea ,el empleado ahora tiene rol limpiador"){
+          laboratorio.asignarRol(empleadoBiclope,Limpiador)
+          it("no puede defender"){
+            empleadoBiclope.puedeRealizarTarea(defensa).shouldBeFalse()
+          }
+        }
+      }
 
     }
+
+
 
   }
 
-  describe("Fuerza - ejemplo"){
-    Laboratorio.rolAsignado = Soldado
+  /*describe("ejemplos- no del parcial"){
+
+
     val sector1 = Sector(true,true,4)
 
     it("un Bíclope Soldado con 10 de estamina y 4 de daño extra"){
-      val mimBiclople = Biclope(Soldado,10)
-      mimBiclople.defender()
-      mimBiclople.defender()
+      val mimBiclople = Biclope(10)
+      mimBiclople.defender(sector1)
+      mimBiclople.defender(sector1)
       mimBiclople.fuerza().shouldBe(11)
     }
-
+    // debe redondear para abajo y el int aparentemente lo hace
     it("Cíclope Soldado estamina 10, daño extra 4") {
 
-      val minCiclo = Ciclople(Soldado,10)
-      minCiclo.defender()
-      minCiclo.defender()
-      minCiclo.fuerza().shouldBe(5)
+      val minCiclo = Ciclople(10)
+      minCiclo.defender(sector1)
+      minCiclo.defender(sector1)
+      //minCiclo.fuerza().shouldBe(5)
     }
 
 
-  }
+  }*/
 
 
 })
