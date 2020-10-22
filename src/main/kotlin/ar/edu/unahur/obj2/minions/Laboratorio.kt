@@ -32,7 +32,7 @@ class Laboratorio(){
     // debe saltar en algun lado si no hay empleados capaces
 
     fun realizarTarea(tarea: Tarea) {
-        empleadosCapaz(tarea)?.let { tarea.realizarsePor(it) }
+        empleadosCapaz(tarea)?.let { tarea.realizarLaTarea(it) }
         tareasPendientes.remove(tarea)
         empleadosCapaz(tarea)?.agregarTarea(tarea)
 
