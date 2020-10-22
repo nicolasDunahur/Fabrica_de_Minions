@@ -149,28 +149,33 @@ class MinionTest : DescribeSpec({
       laboratorioX.enOrden().shouldBeFalse()
     }
   }
-  /*describe("ejemplos- no del parcial"){
+  describe("7. Laboratorio - Jornada Laboral"){
+    val sector1 = Sector(true,false,4)
+    val sector2 = Sector(true,false,4)
+    val sector3 = Sector(true,false,0)
 
+    val obreroBiclope = Biclope(Obrero, 10)
+    val obreroCicople = Ciclople(Obrero,100)
 
-    val sector1 = Sector(true,true,4)
+    val defender1 = DefenderSector(sector1)
+    val defender2 = DefenderSector(sector2)
+    val repararPc = ArreglarMaquina(mutableListOf("cd", "tester"), 5)
+    val limpiar3 = LimpiarSector(sector3)
 
-    it("un Bíclope Soldado con 10 de estamina y 4 de daño extra"){
-      val mimBiclople = Biclope(10)
-      mimBiclople.defender(sector1)
-      mimBiclople.defender(sector1)
-      mimBiclople.fuerza().shouldBe(11)
+    val laboratorioX= Laboratorio()
+    laboratorioX.sectores = mutableListOf<Sector>(sector1,sector2,sector3)
+    laboratorioX.empleados = mutableListOf<Minion>(obreroBiclope,obreroCicople)
+    laboratorioX.tareasPendientes = mutableListOf<Tarea>(defender1,defender2,repararPc,limpiar3)
+
+    it("Realizar todas las tareas"){
+      laboratorioX.enOrden().shouldBeTrue()
     }
-    // debe redondear para abajo y el int aparentemente lo hace
-    it("Cíclope Soldado estamina 10, daño extra 4") {
+    //it("Infeliz, sin amenazas y limpio"){
+      //obreroBiclope.estamina = 8
+      //laboratorioX.enOrden().shouldBeFalse()
+    //}
+  }
 
-      val minCiclo = Ciclople(10)
-      minCiclo.defender(sector1)
-      minCiclo.defender(sector1)
-      //minCiclo.fuerza().shouldBe(5)
-    }
-
-
-  }*/
 
 
 })

@@ -57,7 +57,7 @@ object difucultadPorGremio { var dificultad = 10 }
 
 
 
-/*class LimpiarSector(val sector: Sector) : Tarea(){
+class LimpiarSector(val sector: Sector) : Tarea(){
 
     override var dificultad = difucultadPorGremio.dificultad
 
@@ -79,6 +79,6 @@ object difucultadPorGremio { var dificultad = 10 }
         }
         else {throw Exception ("No le dá")}
     }
-}*/
+}
 
 
