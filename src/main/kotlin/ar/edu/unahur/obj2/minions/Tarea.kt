@@ -24,7 +24,6 @@ class ArreglarMaquina(val herramientas: MutableList<String>, val complejidad: In
         else throw Exception("esta tarea no puede ser realizada...")
     }
 
-
 }
 
 class DefenderSector(val sector: Sector) : Tarea(){

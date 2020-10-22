@@ -1,7 +1,6 @@
 package ar.edu.unahur.obj2.minions
 
 import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.core.spec.style.describeSpec
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldBeEmpty
@@ -14,8 +13,8 @@ class MinionTest : DescribeSpec({
     val laboratorio = Laboratorio()
 
 
-    val empleadoBiclope = Biclope(Obrero, 0)
-    val empleadoCiclope = Ciclople(Obrero, 50)
+    val empleadoBiclope = Biclope(Peon, 0)
+    val empleadoCiclope = Ciclople(Peon, 50)
 
 
     it("empleado come uva ") {
@@ -58,7 +57,7 @@ class MinionTest : DescribeSpec({
     }
     describe(" fuerza de los empleados"){
 
-      val ciclopeObrero = Ciclople(Obrero,10)
+      val ciclopeObrero = Ciclople(Peon,10)
 
       it("fuerza de los empleados con rol obrero"){
 
@@ -92,8 +91,8 @@ class MinionTest : DescribeSpec({
       describe("si el empleado puede defender el sector") {
         val sectorA = Sector(true,false,20)
         val defensa = DefenderSector(sectorA)
-        val obreroBiclope = Biclope(Obrero, 10)
-        val obreroCicople = Ciclople(Obrero,100)
+        val obreroBiclope = Biclope(Peon, 10)
+        val obreroCicople = Ciclople(Peon,100)
 
         describe(" el empleado no puede realizar la tarea ,el empleado ahora tiene rol limpiador"){
 
@@ -135,8 +134,8 @@ class MinionTest : DescribeSpec({
     val sector2 = Sector(true,true,0)
     val sector3 = Sector(true,true,0)
 
-    val obreroBiclope = Biclope(Obrero, 10)
-    val obreroCicople = Ciclople(Obrero,100)
+    val obreroBiclope = Biclope(Peon, 10)
+    val obreroCicople = Ciclople(Peon,100)
 
     val laboratorioX= Laboratorio()
     laboratorioX.sectores = mutableListOf<Sector>(sector1,sector2,sector3)
@@ -155,8 +154,8 @@ class MinionTest : DescribeSpec({
     val sector2 = Sector(true,false,4)
     val sector3 = Sector(true,false,0)
 
-    val obreroBiclope = Biclope(Obrero, 10)
-    val obreroCicople = Ciclople(Obrero,100)
+    val obreroBiclope = Biclope(Peon, 10)
+    val obreroCicople = Ciclople(Peon,100)
 
     val defender1 = DefenderSector(sector1)
     val defender2 = DefenderSector(sector2)

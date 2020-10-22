@@ -24,7 +24,7 @@ object Soldado : Rol() {
 
 }
 
-object Obrero : Rol() {
+abstract class Obrero : Rol() {
     override var herramientas =  mutableListOf<String>("pala","serrucho","martillo","destornillador")
     override fun defender(minion: Minion) {
         this.perderlaMitadDeLaEstamina(minion)
@@ -34,31 +34,25 @@ object Obrero : Rol() {
     }
 }
 
-object Limpiador : Rol() {
-    override fun defender(minion: Minion) = throw Exception("Me niego")
+object Peon : Obrero(){
+
 }
 
-/* hay que repensar quien conviene que recuerde o ejecute las cosas si hacer
 
-    unaTarea.puedeSerRealizada(unMinion) o unMinion.puedeRealizar(unaTarea)
-
-    en todas las tareas es necesario el dato de un minion como parametro
-    en capataz se complica.
-*/
-
-// mismas caracteristicas que obrero
-object Capataz: Rol(){
+object Capataz: Obrero(){
     val subAlternos = mutableListOf<Minion>()
     fun realizarTarea(unaTarea: Tarea){
         // unaTarea.realizarsePor(this.?seleccionarElMejor())
 
     }
-
     fun seleccionarElMejor() = subAlternos.maxBy{ it.experiencia() }
     fun empladosPuedenHacerla(tarea: Tarea) {
         subAlternos.any {  tarea.puedeSerRealizada(it)}
     }
 
+}
 
 
+object Limpiador : Rol() {
+    override fun defender(minion: Minion) = throw Exception("Me niego")
 }
