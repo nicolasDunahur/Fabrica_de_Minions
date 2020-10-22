@@ -3,6 +3,7 @@ package ar.edu.unahur.obj2.minions
 abstract class Rol() {
 
     open var herramientas = mutableListOf<String>()
+    var danioExtra = 0
 
     open fun fuerza(minion: Minion) = (minion.estamina/2) + 2
     fun puedeDefender(unSector: Sector, unMinion: Minion) = unSector.gradoDeAmenaza <= this.fuerza(unMinion)
@@ -12,7 +13,7 @@ abstract class Rol() {
 
 object Soldado : Rol() {
     val arma = String()
-    var danioExtra = 0
+
     override fun fuerza(minion: Minion): Int {
         return super.fuerza(minion) + danioExtra
     }

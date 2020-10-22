@@ -55,6 +55,24 @@ class MinionTest : DescribeSpec({
 
       }
     }
+    describe(" fuerza de los empleados"){
+
+      val ciclopeObrero = Ciclople(Obrero,10)
+
+      it("fuerza de los empleados con rol obrero"){
+
+        empleadoBiclope.fuerza().shouldBe(2)
+        ciclopeObrero.fuerza().shouldBe(3)
+      }
+      it("fuerza de los empleados con rol Soldado"){
+        laboratorio.asignarRol(ciclopeObrero,Soldado)
+        Soldado.danioExtra = 4
+
+        ciclopeObrero.fuerza().shouldBe(5)
+
+
+      }
+    }
 
     describe("si lo empleados pueden realizar las tareas asignadas") {
       val pc = ArreglarMaquina(mutableListOf("cd", "tester"), 5)
@@ -75,11 +93,32 @@ class MinionTest : DescribeSpec({
         val defensa = DefenderSector(sectorA)
 
         describe(" el empleado no puede realizar la tarea ,el empleado ahora tiene rol limpiador"){
+
           laboratorio.asignarRol(empleadoBiclope,Limpiador)
+
           it("no puede defender"){
             empleadoBiclope.puedeRealizarTarea(defensa).shouldBeFalse()
           }
         }
+        describe("empleados con rol de Obreros"){
+
+          it("pueden defender el sector"){
+            val obreroBiclope = Biclope(Obrero, 10)
+            val obreroCicople = Ciclople(Obrero,100)
+
+            defensa.puededefender(obreroBiclope).shouldBeFalse()
+
+            defensa.puededefender(obreroCicople).shouldBeTrue()
+          }
+        }
+        describe("empleados con rol soldado"){
+          laboratorio.asignarRol(empleadoBiclope,Soldado)
+          laboratorio.asignarRol(empleadoCiclope,Soldado)
+
+
+        }
+
+
       }
 
     }

@@ -4,7 +4,7 @@ abstract class Tarea() {
 
 
     abstract val dificultad: Int
-    abstract fun realizarsePor(minion: Minion)
+    //abstract fun realizarsePor(minion: Minion): Boolean
     abstract fun puedeSerRealizada(minion: Minion):Boolean
 
 
@@ -20,12 +20,13 @@ class ArreglarMaquina(val herramientas: MutableList<String>, val complejidad: In
 
     fun puedeRepararMaquina(minion: Minion) = minion.estamina >= complejidad && tieneHerramientas(minion)
     fun tieneHerramientas(minion: Minion) = herramientas.all { it in minion.rol.herramientas}
+
     fun repararMaquina(minion: Minion) { if (puedeRepararMaquina(minion)) minion.estamina -= complejidad }
 
-    override fun realizarsePor(minion: Minion) {
+    /*override fun realizarsePor(minion: Minion): Boolean {
         if (this.puedeSerRealizada(minion))
             minion.disminuirEstamina(complejidad)
-    }
+    }*/
 
 
 }
@@ -34,20 +35,17 @@ class DefenderSector(val sector: Sector) : Tarea(){
 
     override var dificultad = sector.gradoDeAmenaza // incompleto, no se como encararlo
 
-    override fun puedeSerRealizada(minion: Minion) =
-            minion.fuerza >= dificultad // &&  minion.rol <==> Limpiador() como hacer el diferente?
+    fun puededefender(minion: Minion) = minion.fuerza() >= sector.gradoDeAmenaza
 
-    override fun realizarsePor(minion: Minion) {
-        if (this.puedeSerRealizada(minion)) {
-            //minion.defender(sector)
-            sector.defendido()
-        }
-    }
+    override fun puedeSerRealizada(minion: Minion) =
+            minion.fuerza() >= dificultad // &&  minion.rol <==> Limpiador() como hacer el diferente?
+
+    //override fun realizarsePor(minion: Minion)  = false
 }
 
 object difucultadPorGremio { var dificultad = 10 }
 
-class LimpiarSector(val sector: Sector) : Tarea(){
+/*class LimpiarSector(val sector: Sector) : Tarea(){
 
 
     override var dificultad = difucultadPorGremio.dificultad
@@ -62,12 +60,12 @@ class LimpiarSector(val sector: Sector) : Tarea(){
             minion.rol == Limpiador
 
     //  muchos if y analizar si el profe lo quiere asi. nombres feos de funciones. mucho codigo
-    override fun realizarsePor(minion: Minion) {
+    /*override fun realizarsePor(minion: Minion): Boolean {
         if (this.esLimpiador(minion)) {
             sector.serLimpiado()
         } else {
             this.realizarseiNoEsLimpiadorYPuede(minion)
-        }
+        }*/
     }
     fun realizarseiNoEsLimpiadorYPuede(minion: Minion) {
         if (this.puedeSerRealizada(minion)) {
@@ -77,6 +75,6 @@ class LimpiarSector(val sector: Sector) : Tarea(){
             throw Exception ("No le dá")
         }
     }
-}
+}*/
 
 
