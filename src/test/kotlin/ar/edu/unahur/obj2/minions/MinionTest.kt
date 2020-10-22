@@ -91,6 +91,8 @@ class MinionTest : DescribeSpec({
       describe("si el empleado puede defender el sector") {
         val sectorA = Sector(true,false,20)
         val defensa = DefenderSector(sectorA)
+        val obreroBiclope = Biclope(Obrero, 10)
+        val obreroCicople = Ciclople(Obrero,100)
 
         describe(" el empleado no puede realizar la tarea ,el empleado ahora tiene rol limpiador"){
 
@@ -103,8 +105,7 @@ class MinionTest : DescribeSpec({
         describe("empleados con rol de Obreros"){
 
           it("pueden defender el sector"){
-            val obreroBiclope = Biclope(Obrero, 10)
-            val obreroCicople = Ciclople(Obrero,100)
+
 
             defensa.puedeSerRealizada(obreroBiclope).shouldBeFalse()
 
@@ -115,15 +116,17 @@ class MinionTest : DescribeSpec({
           laboratorio.asignarRol(empleadoBiclope,Soldado)
           laboratorio.asignarRol(empleadoCiclope,Soldado)
 
+          it( "el empleado no pude realizar la tarea de defender el sector"){
+            obreroBiclope.puedeRealizarTarea(defensa).shouldBeFalse()
+          }
+          it("el empleado si puede realizar la tarea de defenser el sector "){
 
+            obreroCicople.puedeRealizarTarea(defensa).shouldBeTrue()
+          }
         }
-
-
       }
 
     }
-
-
 
   }
 

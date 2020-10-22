@@ -43,6 +43,7 @@ object Limpiador : Rol() {
     en todas las tareas es necesario el dato de un minion como parametro
     en capataz se complica.
 */
+
 // mismas caracteristicas que obrero
 object Capataz: Rol(){
     val subAlternos = mutableListOf<Minion>()

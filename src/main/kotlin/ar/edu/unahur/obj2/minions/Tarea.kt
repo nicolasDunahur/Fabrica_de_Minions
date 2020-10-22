@@ -5,25 +5,30 @@ abstract class Tarea() {
 
     abstract val dificultad: Int
     abstract fun realizarsePor(minion: Minion)
-    abstract fun puedeSerRealizada(minion: Minion): Boolean
+    abstract fun puedeSerRealizada(minion: Minion):Boolean
 
-    fun esLimpiador(minion: Minion) =
-            minion.rol == Limpiador
+
 
 }
 
-class ArreglarMaquina(val herramientas: MutableList<String>, val complejidad: Int) : Tarea() {
-    override val dificultad = complejidad * 2
-    fun tieneHerramientas(minion: Minion) = herramientas.all { it in minion.rol.herramientas }
+class ArreglarMaquina(val herramientas: MutableList<String>, val complejidad: Int) : Tarea(){
 
-    // fun puedeRepararMaquina(minion: Minion) = minion.estamina >= complejidad && tieneHerramientas(minion)
-    override fun puedeSerRealizada(minion: Minion) = minion.estamina >= complejidad && tieneHerramientas(minion)
+    override fun puedeSerRealizada(minion: Minion): Boolean = puedeRepararMaquina(minion)
+
+
+    override val dificultad = complejidad * 2
+
+
+
+    fun puedeRepararMaquina(minion: Minion) = minion.estamina >= complejidad && tieneHerramientas(minion)
+    fun tieneHerramientas(minion: Minion) = herramientas.all { it in minion.rol.herramientas}
+
+    fun repararMaquina(minion: Minion) { if (puedeRepararMaquina(minion)) minion.estamina -= complejidad }
 
     override fun realizarsePor(minion: Minion) {
         if (this.puedeSerRealizada(minion))
             minion.disminuirEstamina(complejidad)
     }
-
 
 
 }
@@ -44,7 +49,7 @@ class DefenderSector(val sector: Sector) : Tarea(){
     }
 
     override fun puedeSerRealizada(minion: Minion) =
-            minion.fuerza() >= dificultad  &&  !this.esLimpiador(minion)
+            minion.fuerza() >= dificultad  &&  minion.rol != Limpiador
 
 }
 
@@ -52,7 +57,7 @@ object difucultadPorGremio { var dificultad = 10 }
 
 
 
-class LimpiarSector(val sector: Sector) : Tarea(){
+/*class LimpiarSector(val sector: Sector) : Tarea(){
 
     override var dificultad = difucultadPorGremio.dificultad
 
@@ -74,6 +79,6 @@ class LimpiarSector(val sector: Sector) : Tarea(){
         }
         else {throw Exception ("No le dá")}
     }
-}
+}*/
 
 
