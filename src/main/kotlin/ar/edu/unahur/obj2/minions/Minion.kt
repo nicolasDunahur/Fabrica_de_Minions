@@ -24,6 +24,9 @@ abstract class Minion(var rol: Rol,var estamina: Int) {
     fun estaContento() = estamina >= 9
 
     fun agregarTarea(tarea: Tarea) = tareaRealizadas.add(tarea)
+
+    fun esLimpiador(minion: Minion) =
+            minion.rol == Limpiador
 }
 
 class Biclope(rol: Rol,estamina: Int) : Minion(rol, estamina) {

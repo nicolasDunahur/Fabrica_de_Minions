@@ -4,6 +4,7 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.core.spec.style.describeSpec
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
+import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.shouldBe
 
 class MinionTest : DescribeSpec({
@@ -168,7 +169,8 @@ class MinionTest : DescribeSpec({
     laboratorioX.tareasPendientes = mutableListOf<Tarea>(defender1,defender2,repararPc,limpiar3)
 
     it("Realizar todas las tareas"){
-      laboratorioX.enOrden().shouldBeTrue()
+      laboratorioX.jonadaLaboral()
+      laboratorioX.tareasPendientes.shouldBeEmpty()
     }
     //it("Infeliz, sin amenazas y limpio"){
       //obreroBiclope.estamina = 8

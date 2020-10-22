@@ -62,14 +62,14 @@ class LimpiarSector(val sector: Sector) : Tarea(){
     override var dificultad = difucultadPorGremio.dificultad
 
     override fun puedeSerRealizada(minion: Minion) =
-            this.tamanioYEstamina(minion) || this.esLimpiador(minion)
+            this.tamanioYEstamina(minion) || minion.esLimpiador(minion)
 
     fun tamanioYEstamina(minion: Minion) =
             minion.estamina >= 4 && sector.esGrande || minion.estamina >= 1 && !sector.esGrande
 
     //  muchos if y analizar si el profe lo quiere asi. nombres feos de funciones. mucho codigo
     override fun realizarsePor(minion: Minion) {
-        if (this.esLimpiador(minion))  {sector.serLimpiado()}
+        if (minion.esLimpiador(minion))  {sector.serLimpiado()}
         else {this.realizarseSiNoEsLimpiadorYPuede(minion)}
     }
     fun realizarseSiNoEsLimpiadorYPuede(minion: Minion) {
