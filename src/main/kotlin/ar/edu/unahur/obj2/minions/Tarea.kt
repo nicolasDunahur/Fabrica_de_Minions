@@ -5,7 +5,6 @@ abstract class Tarea() {
     abstract var dificultad: Int
     abstract fun realizarLaTarea(minion: Minion)
     abstract fun puedeSerRealizada(minion: Minion):Boolean
-
 }
 
 class ArreglarMaquina(val herramientas: MutableList<String>, val complejidad: Int) : Tarea(){
