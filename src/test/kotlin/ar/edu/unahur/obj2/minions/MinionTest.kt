@@ -171,11 +171,14 @@ class MinionTest : DescribeSpec({
     it("Realizar todas las tareas"){
       laboratorioX.jonadaLaboral()
       laboratorioX.tareasPendientes.shouldBeEmpty()
+
+
     }
-    //it("Infeliz, sin amenazas y limpio"){
-      //obreroBiclope.estamina = 8
-      //laboratorioX.enOrden().shouldBeFalse()
-    //}
+    it("No se puede realizar debido a que no hay tareas"){
+      val laboratorioY = Laboratorio()
+      obreroBiclope.estamina = 8
+      
+    }
   }
 
 
