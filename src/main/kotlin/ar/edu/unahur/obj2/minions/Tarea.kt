@@ -2,32 +2,27 @@ package ar.edu.unahur.obj2.minions
 
 abstract class Tarea() {
 
-
-    abstract val dificultad: Int
-    abstract fun realizarsePor(minion: Minion)
+    abstract var dificultad: Int
+    abstract fun realizarLaTarea(minion: Minion)
     abstract fun puedeSerRealizada(minion: Minion):Boolean
-
-
 
 }
 
 class ArreglarMaquina(val herramientas: MutableList<String>, val complejidad: Int) : Tarea(){
 
+    override var dificultad = complejidad *2
+
     override fun puedeSerRealizada(minion: Minion): Boolean = puedeRepararMaquina(minion)
 
-
-    override val dificultad = complejidad * 2
-
-
-
     fun puedeRepararMaquina(minion: Minion) = minion.estamina >= complejidad && tieneHerramientas(minion)
+
     fun tieneHerramientas(minion: Minion) = herramientas.all { it in minion.rol.herramientas}
 
-    fun repararMaquina(minion: Minion) { if (puedeRepararMaquina(minion)) minion.estamina -= complejidad }
+    fun repararMaquina(minion: Minion) { minion.estamina -= complejidad }
 
-    override fun realizarsePor(minion: Minion) {
-        if (this.puedeSerRealizada(minion))
-            minion.disminuirEstamina(complejidad)
+    override fun realizarLaTarea(minion: Minion) {
+        if (puedeSerRealizada(minion)) repararMaquina(minion)
+        else throw Exception("esta tarea no puede ser realizada...")
     }
 
 
@@ -35,14 +30,12 @@ class ArreglarMaquina(val herramientas: MutableList<String>, val complejidad: In
 
 class DefenderSector(val sector: Sector) : Tarea(){
 
-    override var dificultad = sector.gradoDeAmenaza // incompleto, no se como encararlo
+    override var dificultad = sector.gradoDeAmenaza
 
-    // fun puededefender(minion: Minion) = minion.fuerza() >= sector.gradoDeAmenaza -- para mi esta demas
-    override fun realizarsePor(minion: Minion) {
+    override fun realizarLaTarea(minion: Minion) {
         if (this.puedeSerRealizada(minion)){
-            //estos son los efectos que produce su ejecucion
             minion.defender(sector)
-            sector.defendido()
+            sector.sectorAtacado()
         } else{
             throw Exception ("No puede ser defendido")
         }
@@ -56,6 +49,15 @@ class DefenderSector(val sector: Sector) : Tarea(){
 object difucultadPorGremio { var dificultad = 10 }
 
 
+class LimpiarSector(val sector: Sector, override var dificultad: Int) : Tarea(){
+
+
+    override fun realizarLaTarea(minion: Minion){
+    }
+
+    override fun puedeSerRealizada(minion: Minion) = false
+
+}
 
 class LimpiarSector(val sector: Sector) : Tarea(){
 

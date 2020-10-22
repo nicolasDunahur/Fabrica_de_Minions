@@ -6,7 +6,6 @@ abstract class Rol() {
     var danioExtra = 0
 
     open fun fuerza(minion: Minion) = (minion.estamina/2) + 2
-    fun puedeDefender(unSector: Sector, unMinion: Minion) = unSector.gradoDeAmenaza <= this.fuerza(unMinion)
     open fun defender(minion: Minion) {}
 }
 
@@ -18,6 +17,7 @@ object Soldado : Rol() {
         return super.fuerza(minion) + danioExtra
     }
     fun ganarExperiencia() { danioExtra += 2 }
+
     override fun defender(minion: Minion) {
         this.ganarExperiencia()
     }
