@@ -20,6 +20,8 @@ abstract class Minion(var rol: Rol,var estamina: Int) {
 
 
     open fun fuerza() = rol.fuerza(this)
+
+    fun estaContento() = estamina >= 9
 }
 
 class Biclope(rol: Rol,estamina: Int) : Minion(rol, estamina) {

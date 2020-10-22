@@ -39,7 +39,9 @@ object Limpiador : Rol() {
 }
 
 /* hay que repensar quien conviene que recuerde o ejecute las cosas si hacer
+
     unaTarea.puedeSerRealizada(unMinion) o unMinion.puedeRealizar(unaTarea)
+
     en todas las tareas es necesario el dato de un minion como parametro
     en capataz se complica.
 */
@@ -49,7 +51,6 @@ object Capataz: Rol(){
     val subAlternos = mutableListOf<Minion>()
     fun realizarTarea(unaTarea: Tarea){
         // unaTarea.realizarsePor(this.?seleccionarElMejor())
-
 
     }
 

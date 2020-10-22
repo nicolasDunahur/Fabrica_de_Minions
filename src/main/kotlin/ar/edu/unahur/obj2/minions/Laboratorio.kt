@@ -2,10 +2,12 @@ package ar.edu.unahur.obj2.minions
 
 
 
-class Laboratorio{
+class Laboratorio(){
 
 
     var empleados = mutableListOf<Minion>()
+    var sectores = mutableListOf<Sector>()
+    var tareasPendientes = mutableListOf<Tarea>()
 
     fun enviarTarea(minion: Minion, tarea: Tarea) {
         if (tarea.puedeSerRealizada(minion)) minion.tareaRealizadas.add(tarea)
@@ -13,7 +15,10 @@ class Laboratorio{
     }
     fun asignarRol(minion: Minion,rolNuevo: Rol){ minion.rol = rolNuevo}
 
-
+    fun enOrden() =
+            sectores.all { it.estaLimpio }
+                    && sectores.all { it.tieneAmenaza() }
+                    && empleados.all { it.estaContento() }
 }
 
 

@@ -129,7 +129,26 @@ class MinionTest : DescribeSpec({
     }
 
   }
+  describe("6. Laboratorio - esta en orden"){
+    val sector1 = Sector(true,true,0)
+    val sector2 = Sector(true,true,0)
+    val sector3 = Sector(true,true,0)
 
+    val obreroBiclope = Biclope(Obrero, 10)
+    val obreroCicople = Ciclople(Obrero,100)
+
+    val laboratorioX= Laboratorio()
+    laboratorioX.sectores = mutableListOf<Sector>(sector1,sector2,sector3)
+    laboratorioX.empleados = mutableListOf<Minion>(obreroBiclope,obreroCicople)
+
+    it("Todes contentes, sin amenazas y limpio"){
+      laboratorioX.enOrden().shouldBeTrue()
+    }
+    it("Infeliz, sin amenazas y limpio"){
+      obreroBiclope.estamina = 8
+      laboratorioX.enOrden().shouldBeFalse()
+    }
+  }
   /*describe("ejemplos- no del parcial"){
 
 
