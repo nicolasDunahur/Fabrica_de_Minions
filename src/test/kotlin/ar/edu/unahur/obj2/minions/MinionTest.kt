@@ -177,7 +177,7 @@ class MinionTest : DescribeSpec({
     it("No se puede realizar debido a que no hay tareas"){
       val laboratorioY = Laboratorio()
       obreroBiclope.estamina = 8
-      
+
     }
   }
 
