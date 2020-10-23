@@ -1,5 +1,6 @@
 package ar.edu.unahur.obj2.minions
 
+import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
@@ -156,27 +157,50 @@ class MinionTest : DescribeSpec({
 
     val obreroBiclope = Biclope(Peon, 10)
     val obreroCicople = Ciclople(Peon,100)
+    val obreroInutil = Ciclople(Peon,1)
 
     val defender1 = DefenderSector(sector1)
     val defender2 = DefenderSector(sector2)
     val repararPc = ArreglarMaquina(mutableListOf("cd", "tester"), 5)
     val limpiar3 = LimpiarSector(sector3)
+    val repararReactor = ArreglarMaquina(mutableListOf("escabadientes"), 500000)
 
     val laboratorioX= Laboratorio()
-    laboratorioX.sectores = mutableListOf<Sector>(sector1,sector2,sector3)
-    laboratorioX.empleados = mutableListOf<Minion>(obreroBiclope,obreroCicople)
-    laboratorioX.tareasPendientes = mutableListOf<Tarea>(defender1,defender2,repararPc,limpiar3)
+
 
     it("Realizar todas las tareas"){
+      laboratorioX.sectores = mutableListOf<Sector>(sector1,sector2,sector3)
+      laboratorioX.empleados = mutableListOf<Minion>(obreroBiclope,obreroCicople)
+      laboratorioX.tareasPendientes = mutableListOf<Tarea>(defender1,defender2,repararPc,limpiar3)
+
       laboratorioX.jonadaLaboral()
       laboratorioX.tareasPendientes.shouldBeEmpty()
-
-
     }
     it("No se puede realizar debido a que no hay tareas"){
-      val laboratorioY = Laboratorio()
-      obreroBiclope.estamina = 8
+      laboratorioX.empleados = mutableListOf<Minion>(obreroBiclope,obreroCicople)
+
+      shouldThrowAny {
+        laboratorioX.jonadaLaboral()
+      }
       
+    }
+    it("Nadie puede realizar las tareas") {
+      laboratorioX.empleados = mutableListOf<Minion>(obreroInutil)
+      laboratorioX.tareasPendientes = mutableListOf<Tarea>(defender1, defender2, repararPc, limpiar3)
+
+      shouldThrowAny {
+        laboratorioX.jonadaLaboral()
+      }
+    }
+    it("Quedan tareas sin resolver"){
+      laboratorioX.sectores = mutableListOf<Sector>(sector1,sector2,sector3)
+      laboratorioX.empleados = mutableListOf<Minion>(obreroBiclope,obreroCicople)
+      laboratorioX.tareasPendientes = mutableListOf<Tarea>(defender1,defender2,repararPc,limpiar3,repararReactor)
+
+      //laboratorioX.tareasPendientes.size.shouldBe(1)
+      shouldThrowAny {
+        laboratorioX.jonadaLaboral()
+      }
     }
   }
 

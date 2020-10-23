@@ -20,23 +20,40 @@ class Laboratorio(){
                     && sectores.all { it.tieneAmenaza() }
                     && empleados.all { it.estaContento() }
 
+    // recorre la lista de tareas con el empleado(si existe) que puede resolverlas
     fun jonadaLaboral() {
-        if (hayTareasPendientes()) {
-            tareasPendientes.forEach {realizarTarea(it)}
-        }
+        if (hayTareasPendientes()) tareasPendientes.map { siAlgunoPuedeLoHace(it) }
         else throw Exception("No hay tareas pendientes")
     }
+
+    // si existe el que pueda resolver una tarea, la hace, se saca de pendientes y
+    // la agrega a su registro.
+    fun siAlgunoPuedeLoHace(tarea: Tarea) {
+        if (algunoCapaz(tarea)){
+            realizarTarea(tarea)
+            tareasPendientes.remove(tarea)
+            empleadoCapaz(tarea)?.agregarTarea(tarea)
+        }
+        else {
+            throw Exception("Ningun empleado puede hacer esta tarea")
+        }
+    }
+
+    // la tarea es realizada por el que puede
+    fun realizarTarea(tarea: Tarea) = this.empleadoCapaz(tarea)?.let { tarea.realizarLaTarea(it) }
+
     fun hayTareasPendientes() = tareasPendientes.isNotEmpty()
 
-    fun empleadosCapaz(tarea: Tarea) = empleados.find { tarea.puedeSerRealizada(it) }
-    // debe saltar en algun lado si no hay empleados capaces
+    // trae al empleado capaz
+    fun empleadoCapaz(tarea: Tarea) = empleados.find { tarea.puedeSerRealizada(it) }
 
-    fun realizarTarea(tarea: Tarea) {
-        empleadosCapaz(tarea)?.let { tarea.realizarLaTarea(it) }
-        tareasPendientes.remove(tarea)
-        empleadosCapaz(tarea)?.agregarTarea(tarea)
+    // existe alguien capaz?
+    fun algunoCapaz(tarea: Tarea) = empleados.any { tarea.puedeSerRealizada(it) }
 
-    }
+
+
+
+
 
 
 }
