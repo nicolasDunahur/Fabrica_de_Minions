@@ -24,7 +24,7 @@ object Soldado : Rol() {
 
 }
 
-abstract class Obrero : Rol() {
+open class  Obrero : Rol() {
     override var herramientas =  mutableListOf<String>("pala","serrucho","martillo","destornillador")
     override fun defender(minion: Minion) {
         this.perderlaMitadDeLaEstamina(minion)
@@ -34,12 +34,8 @@ abstract class Obrero : Rol() {
     }
 }
 
-object Peon : Obrero(){
 
-}
-
-
-object Capataz: Obrero(){
+object Capataz: Obrero() {
     val subAlternos = mutableListOf<Minion>()
     fun realizarTarea(unaTarea: Tarea){
         // unaTarea.realizarsePor(this.?seleccionarElMejor())

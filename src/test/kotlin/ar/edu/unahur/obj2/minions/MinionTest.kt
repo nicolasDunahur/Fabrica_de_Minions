@@ -8,14 +8,15 @@ import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.shouldBe
 
 class MinionTest : DescribeSpec({
+  val Obrero = Obrero()
 
   describe("minion  come fruta para recuperar energia") {
 
     val laboratorio = Laboratorio()
 
 
-    val empleadoBiclope = Biclope(Peon, 0)
-    val empleadoCiclope = Ciclople(Peon, 50)
+    val empleadoBiclope = Biclope(Obrero, 0)
+    val empleadoCiclope = Ciclople(Obrero, 50)
 
 
     it("empleado come uva ") {
@@ -58,18 +59,18 @@ class MinionTest : DescribeSpec({
     }
     describe(" fuerza de los empleados"){
 
-      val ciclopeObrero = Ciclople(Peon,10)
+      val ciclopeObrero = Ciclople(Obrero,50)
 
       it("fuerza de los empleados con rol obrero"){
 
         empleadoBiclope.fuerza().shouldBe(2)
-        ciclopeObrero.fuerza().shouldBe(3)
+        ciclopeObrero.fuerza().shouldBe(13)
       }
       it("fuerza de los empleados con rol Soldado"){
         laboratorio.asignarRol(ciclopeObrero,Soldado)
         Soldado.danioExtra = 4
 
-        ciclopeObrero.fuerza().shouldBe(5)
+        ciclopeObrero.fuerza().shouldBe(15)
 
 
       }
@@ -92,8 +93,8 @@ class MinionTest : DescribeSpec({
       describe("si el empleado puede defender el sector") {
         val sectorA = Sector(true,false,20)
         val defensa = DefenderSector(sectorA)
-        val obreroBiclope = Biclope(Peon, 10)
-        val obreroCicople = Ciclople(Peon,100)
+        val obreroBiclope = Biclope(Obrero , 10)
+        val obreroCicople = Ciclople(Obrero,100)
 
         describe(" el empleado no puede realizar la tarea ,el empleado ahora tiene rol limpiador"){
 
@@ -135,8 +136,8 @@ class MinionTest : DescribeSpec({
     val sector2 = Sector(true,true,0)
     val sector3 = Sector(true,true,0)
 
-    val obreroBiclope = Biclope(Peon, 10)
-    val obreroCicople = Ciclople(Peon,100)
+    val obreroBiclope = Biclope(Obrero, 10)
+    val obreroCicople = Ciclople(Obrero,100)
 
     val laboratorioX= Laboratorio()
     laboratorioX.sectores = mutableListOf<Sector>(sector1,sector2,sector3)
@@ -155,9 +156,9 @@ class MinionTest : DescribeSpec({
     val sector2 = Sector(true,false,4)
     val sector3 = Sector(true,false,0)
 
-    val obreroBiclope = Biclope(Peon, 10)
-    val obreroCicople = Ciclople(Peon,100)
-    val obreroInutil = Ciclople(Peon,1)
+    val obreroBiclope = Biclope(Obrero, 10)
+    val obreroCicople = Ciclople(Obrero,100)
+    val obreroInutil = Ciclople(Obrero ,1)
 
     val defender1 = DefenderSector(sector1)
     val defender2 = DefenderSector(sector2)
