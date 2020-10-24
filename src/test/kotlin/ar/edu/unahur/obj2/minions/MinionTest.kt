@@ -224,16 +224,15 @@ class MinionTest : DescribeSpec({
     val obreroBiclope = Biclope(obrero, 10)
     val obreroCicople = Ciclople(obrero, 100)
 
-    val laboratorioX = Laboratorio()
-    laboratorioX.sectores = mutableListOf<Sector>(sector1, sector2, sector3)
-    laboratorioX.empleados = mutableListOf<Minion>(obreroBiclope, obreroCicople)
+    Laboratorio.sectores = mutableListOf<Sector>(sector1, sector2, sector3)
+    Laboratorio.empleados = mutableListOf<Minion>(obreroBiclope, obreroCicople)
 
     it("Todes contentes, sin amenazas y limpio") {
-      laboratorioX.enOrden().shouldBeTrue()
+      Laboratorio.enOrden().shouldBeTrue()
     }
     it("Infeliz, sin amenazas y limpio") {
       obreroBiclope.estamina = 8
-      laboratorioX.enOrden().shouldBeFalse()
+      Laboratorio.enOrden().shouldBeFalse()
     }
   }
   describe("7. Laboratorio - Jornada Laboral") {

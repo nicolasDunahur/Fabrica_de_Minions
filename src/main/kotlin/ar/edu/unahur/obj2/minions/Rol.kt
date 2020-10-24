@@ -9,6 +9,7 @@ abstract class Rol() {
 
     open fun fuerza(minion: Minion) = (minion.estamina/2) + 2
     open fun defender(minion: Minion) {}
+    open fun experienciaDeSubAlternos(): Int = 0
 }
 
 open class Obrero() : Rol() {
@@ -19,7 +20,8 @@ open class Obrero() : Rol() {
     override fun defender(minion: Minion) {
         this.perderlaMitadDeLaEstamina(minion)
     }
-    fun perderlaMitadDeLaEstamina(minion: Minion) {
+
+    private fun perderlaMitadDeLaEstamina(minion: Minion) {
         minion.disminuirEstamina((minion.estamina / 2))
     }
 }
@@ -27,8 +29,8 @@ open class Obrero() : Rol() {
 class Capataz: Obrero() {
     lateinit var subAlternos : MutableList<Minion>
 
-    // falta sumar la experiencia
-
+    override fun experienciaDeSubAlternos() = subAlternos.sumBy{ it.experiencia() }
+        
     fun seleccionarElMejor() = subAlternos.maxBy{ it.experiencia() }
 
     fun empladosPuedenHacerla(tarea: Tarea) {

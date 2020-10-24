@@ -14,7 +14,7 @@ abstract class Minion(var rol: Rol,var estamina: Int) {
     fun disminuirEstamina(cuanto: Int) { estamina -= cuanto}
 
 
-    fun experiencia() = tareaRealizadas.size * tareaRealizadas.sumBy { it -> it.dificultad }
+    open fun experiencia() = tareaRealizadas.size * tareaRealizadas.sumBy { it -> it.dificultad } + rol.experienciaDeSubAlternos()
 
     fun puedeRealizarTarea(tarea: Tarea) = tarea.puedeSerRealizada(this)
     fun realizarTarea(tarea: Tarea) = tarea.realizarLaTarea(this)
