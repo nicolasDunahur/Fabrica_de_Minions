@@ -112,7 +112,6 @@ class MinionTest : DescribeSpec({
 
           it("pueden defender el sector"){
 
-
             defensa.puedeSerRealizada(obreroBiclope).shouldBeFalse()
 
             defensa.puedeSerRealizada(obreroCicople).shouldBeTrue()
@@ -210,6 +209,7 @@ class MinionTest : DescribeSpec({
     val capataz = Capataz()
     describe("nuevo rol capataz"){
       val empleadoCapataz = Ciclople(capataz,100)
+      empleadoBiclope.rol.subAlternos
 
     }
 

@@ -19,15 +19,14 @@ abstract class Minion(var rol: Rol,var estamina: Int) {
     fun puedeRealizarTarea(tarea: Tarea) = tarea.puedeSerRealizada(this)
     fun realizarTarea(tarea: Tarea) = tarea.realizarLaTarea(this)
 
-
     open fun fuerza() = rol.fuerza(this)
 
     fun estaContento() = estamina >= 9
 
     fun agregarTarea(tarea: Tarea) = tareaRealizadas.add(tarea)
 
-    fun esLimpiador(minion: Minion) =
-            minion.rol == Limpiador
+    /*fun esLimpiador(minion: Minion) =
+            minion.rol == Limpiador*/
 }
 
 class Biclope(rol: Rol,estamina: Int) : Minion(rol, estamina) {
@@ -47,10 +46,9 @@ class Ciclople(rol: Rol, estamina: Int) : Minion(rol, estamina) {
     override fun comerFruta(fruta: Fruta){
         estamina += fruta.energia
     }
+    override fun fuerza() = super.fuerza() /2
 
-    override fun fuerza(): Int {
-        return super.fuerza()/2
-    }
+
 
 }
 

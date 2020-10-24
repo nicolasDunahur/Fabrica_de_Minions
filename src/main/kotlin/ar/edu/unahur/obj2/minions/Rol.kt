@@ -4,6 +4,7 @@ abstract class Rol() {
 
     open var herramientas = mutableListOf<String>()
     var danioExtra = 0
+    open var subAlternos = mutableListOf<Minion>()
 
     open fun fuerza(minion: Minion) = (minion.estamina/2) + 2
     open fun defender(minion: Minion) {}
@@ -23,7 +24,6 @@ open class Obrero() : Rol() {
 
 class Capataz: Obrero() {
 
-    lateinit var subAlternos: MutableList<Minion>
 
     fun seleccionarElMejor() = subAlternos.maxBy{ it.experiencia() }
     fun empladosPuedenHacerla(tarea: Tarea) {
@@ -32,6 +32,7 @@ class Capataz: Obrero() {
 
 }
 class Soldado : Rol() {
+
     val arma = String()
 
     override fun fuerza(minion: Minion): Int {
@@ -42,10 +43,9 @@ class Soldado : Rol() {
     override fun defender(minion: Minion) {
         this.ganarExperiencia()
     }
-
 }
 
-
 class Limpiador : Rol() {
+
     override fun defender(minion: Minion) = throw Exception("Me niego")
 }
