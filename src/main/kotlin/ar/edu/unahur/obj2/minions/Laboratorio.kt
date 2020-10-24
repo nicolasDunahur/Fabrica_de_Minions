@@ -1,8 +1,7 @@
 package ar.edu.unahur.obj2.minions
 
 
-class Laboratorio(){
-
+object Laboratorio{
 
     var empleados = mutableListOf<Minion>()
     var sectores = mutableListOf<Sector>()

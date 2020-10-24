@@ -10,7 +10,6 @@ import io.kotest.matchers.shouldBe
 class MinionTest : DescribeSpec({
 
   val obrero = Obrero()
-  val laboratorio = Laboratorio()
   val soldado = Soldado()
 
 
@@ -20,7 +19,7 @@ class MinionTest : DescribeSpec({
   val maquinaQuimica = ArreglarMaquina(mutableListOf("destornillador"), 5)
 
   repeat(2) {
-    laboratorio.enviarTarea(empleadoCiclope, maquinaQuimica)
+    Laboratorio.enviarTarea(empleadoCiclope, maquinaQuimica)
   }
 
 
@@ -76,7 +75,7 @@ class MinionTest : DescribeSpec({
       ciclopeObrero.fuerza().shouldBe(13)
     }
     it("fuerza de los empleados con rol Soldado") {
-      laboratorio.asignarRol(ciclopeObrero, soldado)
+      Laboratorio.asignarRol(ciclopeObrero, soldado)
       soldado.danioExtra = 4
 
       ciclopeObrero.fuerza().shouldBe(15)
@@ -105,7 +104,7 @@ class MinionTest : DescribeSpec({
         val obreroCicople = Ciclople(obrero, 100)
 
         describe("El empleado no puede defender,ya que es LIMPIADOR") {
-          laboratorio.asignarRol(empleadoBiclope, Limpiador)
+          Laboratorio.asignarRol(empleadoBiclope, Limpiador)
           it("no puede defender") {
             empleadoBiclope.puedeRealizarTarea(defensa).shouldBeFalse()
           }
@@ -119,8 +118,8 @@ class MinionTest : DescribeSpec({
         }
 
         describe("empleados SOLDADO") {
-          laboratorio.asignarRol(empleadoBiclope, soldado)
-          laboratorio.asignarRol(empleadoCiclope, soldado)
+          Laboratorio.asignarRol(empleadoBiclope, soldado)
+          Laboratorio.asignarRol(empleadoCiclope, soldado)
 
           it("el empleado no pude realizar la tarea de defender el sector") {
             obreroBiclope.puedeRealizarTarea(defensa).shouldBeFalse()
@@ -252,42 +251,40 @@ class MinionTest : DescribeSpec({
     val limpiar3 = LimpiarSector(sector3)
     val repararReactor = ArreglarMaquina(mutableListOf("escabadientes"), 500000)
 
-    val laboratorioX = Laboratorio()
-
     it("Realizar todas las tareas") {
-      laboratorioX.sectores = mutableListOf<Sector>(sector1, sector2, sector3)
-      laboratorioX.empleados = mutableListOf<Minion>(obreroBiclope, obreroCicople)
-      laboratorioX.tareasPendientes = mutableListOf<Tarea>(defender1, limpiar3)
+      Laboratorio.sectores = mutableListOf<Sector>(sector1, sector2, sector3)
+      Laboratorio.empleados = mutableListOf<Minion>(obreroBiclope, obreroCicople)
+      Laboratorio.tareasPendientes = mutableListOf<Tarea>(defender1, limpiar3)
 
-      laboratorioX.jonadaLaboral()
-      laboratorioX.tareasPendientes.shouldBeEmpty()
+      Laboratorio.jonadaLaboral()
+      Laboratorio.tareasPendientes.shouldBeEmpty()
 
     }
     it("No se puede realizar debido a que no hay tareas") {
-      laboratorioX.empleados = mutableListOf<Minion>(obreroBiclope, obreroCicople)
+      Laboratorio.empleados = mutableListOf<Minion>(obreroBiclope, obreroCicople)
 
       shouldThrowAny {
-        laboratorioX.jonadaLaboral()
+        Laboratorio.jonadaLaboral()
       }
     }
     it("Nadie puede realizar las tareas") {
-      laboratorioX.empleados = mutableListOf<Minion>(obreroInutil)
-      laboratorioX.tareasPendientes = mutableListOf<Tarea>(defender1, defender2, repararPc, limpiar3)
+      Laboratorio.empleados = mutableListOf<Minion>(obreroInutil)
+      Laboratorio.tareasPendientes = mutableListOf<Tarea>(defender1, defender2, repararPc, limpiar3)
 
       shouldThrowAny {
-        laboratorioX.jonadaLaboral()
+        Laboratorio.jonadaLaboral()
       }
     }
     it("Quedan tareas sin resolver") {
-      laboratorioX.sectores = mutableListOf<Sector>(sector1, sector2, sector3)
-      laboratorioX.empleados = mutableListOf<Minion>(obreroBiclope, obreroCicople)
-      laboratorioX.tareasPendientes = mutableListOf<Tarea>(defender1, defender2, repararPc, limpiar3, repararReactor)
+      Laboratorio.sectores = mutableListOf<Sector>(sector1, sector2, sector3)
+      Laboratorio.empleados = mutableListOf<Minion>(obreroBiclope, obreroCicople)
+      Laboratorio.tareasPendientes = mutableListOf<Tarea>(defender1, defender2, repararPc, limpiar3, repararReactor)
 
       shouldThrowAny {
-        laboratorioX.jonadaLaboral()
+        Laboratorio.jonadaLaboral()
       }
 
-      laboratorioX.tareasPendientes.size.shouldBe(3)
+      Laboratorio.tareasPendientes.size.shouldBe(3)
 
     }
 
