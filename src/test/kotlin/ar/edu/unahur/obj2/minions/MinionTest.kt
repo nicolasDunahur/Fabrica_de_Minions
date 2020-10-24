@@ -8,15 +8,25 @@ import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.shouldBe
 
 class MinionTest : DescribeSpec({
-  val Obrero = Obrero()
+
+  val obrero = Obrero()
+  val laboratorio = Laboratorio()
+  val soldado= Soldado()
+  val limpiador = Limpiador()
+
+
+  val empleadoBiclope = Biclope(obrero, 0)
+  val empleadoCiclope = Ciclople(obrero, 50)
+
+  val maquinaQuimica = ArreglarMaquina(mutableListOf("destornillador"), 5)
+
+  repeat(2) {
+    laboratorio.enviarTarea(empleadoCiclope, maquinaQuimica)
+  }
+
 
   describe("minion  come fruta para recuperar energia") {
 
-    val laboratorio = Laboratorio()
-
-
-    val empleadoBiclope = Biclope(Obrero, 0)
-    val empleadoCiclope = Ciclople(Obrero, 50)
 
 
     it("empleado come uva ") {
@@ -42,11 +52,6 @@ class MinionTest : DescribeSpec({
     }
     describe("experiencia que tiene los empleados por realizar tareas") {
 
-      val maquinaQuimica = ArreglarMaquina(mutableListOf("destornillador"), 5)
-
-      repeat(2) {
-        laboratorio.enviarTarea(empleadoCiclope, maquinaQuimica)
-      }
 
       it("total de experiencia adquirida por el empleadoBiclope") {
         empleadoBiclope.experiencia().shouldBe(0)
@@ -59,7 +64,7 @@ class MinionTest : DescribeSpec({
     }
     describe(" fuerza de los empleados"){
 
-      val ciclopeObrero = Ciclople(Obrero,50)
+      val ciclopeObrero = Ciclople(obrero,50)
 
       it("fuerza de los empleados con rol obrero"){
 
@@ -67,11 +72,10 @@ class MinionTest : DescribeSpec({
         ciclopeObrero.fuerza().shouldBe(13)
       }
       it("fuerza de los empleados con rol Soldado"){
-        laboratorio.asignarRol(ciclopeObrero,Soldado)
-        Soldado.danioExtra = 4
+        laboratorio.asignarRol(ciclopeObrero,soldado)
+        soldado.danioExtra = 4
 
         ciclopeObrero.fuerza().shouldBe(15)
-
 
       }
     }
@@ -93,12 +97,12 @@ class MinionTest : DescribeSpec({
       describe("si el empleado puede defender el sector") {
         val sectorA = Sector(true,false,20)
         val defensa = DefenderSector(sectorA)
-        val obreroBiclope = Biclope(Obrero , 10)
-        val obreroCicople = Ciclople(Obrero,100)
+        val obreroBiclope = Biclope(obrero , 10)
+        val obreroCicople = Ciclople(obrero,100)
 
         describe(" el empleado no puede realizar la tarea ,el empleado ahora tiene rol limpiador"){
 
-          laboratorio.asignarRol(empleadoBiclope,Limpiador)
+          laboratorio.asignarRol(empleadoBiclope,limpiador)
 
           it("no puede defender"){
             empleadoBiclope.puedeRealizarTarea(defensa).shouldBeFalse()
@@ -115,8 +119,8 @@ class MinionTest : DescribeSpec({
           }
         }
         describe("empleados con rol soldado"){
-          laboratorio.asignarRol(empleadoBiclope,Soldado)
-          laboratorio.asignarRol(empleadoCiclope,Soldado)
+          laboratorio.asignarRol(empleadoBiclope,soldado)
+          laboratorio.asignarRol(empleadoCiclope,soldado)
 
           it( "el empleado no pude realizar la tarea de defender el sector"){
             obreroBiclope.puedeRealizarTarea(defensa).shouldBeFalse()
@@ -136,8 +140,8 @@ class MinionTest : DescribeSpec({
     val sector2 = Sector(true,true,0)
     val sector3 = Sector(true,true,0)
 
-    val obreroBiclope = Biclope(Obrero, 10)
-    val obreroCicople = Ciclople(Obrero,100)
+    val obreroBiclope = Biclope(obrero, 10)
+    val obreroCicople = Ciclople(obrero,100)
 
     val laboratorioX= Laboratorio()
     laboratorioX.sectores = mutableListOf<Sector>(sector1,sector2,sector3)
@@ -156,9 +160,9 @@ class MinionTest : DescribeSpec({
     val sector2 = Sector(true,false,4)
     val sector3 = Sector(true,false,0)
 
-    val obreroBiclope = Biclope(Obrero, 10)
-    val obreroCicople = Ciclople(Obrero,100)
-    val obreroInutil = Ciclople(Obrero ,1)
+    val obreroBiclope = Biclope(obrero, 10)
+    val obreroCicople = Ciclople(obrero,100)
+    val obreroInutil = Ciclople(obrero ,1)
 
     val defender1 = DefenderSector(sector1)
     val defender2 = DefenderSector(sector2)
@@ -203,8 +207,15 @@ class MinionTest : DescribeSpec({
         laboratorioX.jonadaLaboral()
       }
     }
+    val capataz = Capataz()
+    describe("nuevo rol capataz"){
+      val empleadoCapataz = Ciclople(capataz,100)
+
+    }
+
   }
 
 
 
 })
+

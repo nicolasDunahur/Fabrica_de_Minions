@@ -9,8 +9,29 @@ abstract class Rol() {
     open fun defender(minion: Minion) {}
 }
 
+open class Obrero() : Rol() {
 
-object Soldado : Rol() {
+    override var herramientas =  mutableListOf<String>("pala","serrucho","martillo","destornillador")
+
+    override fun defender(minion: Minion) {
+        this.perderlaMitadDeLaEstamina(minion)
+    }
+    fun perderlaMitadDeLaEstamina(minion: Minion) {
+        minion.disminuirEstamina((minion.estamina / 2))
+    }
+}
+
+class Capataz: Obrero() {
+
+    lateinit var subAlternos: MutableList<Minion>
+
+    fun seleccionarElMejor() = subAlternos.maxBy{ it.experiencia() }
+    fun empladosPuedenHacerla(tarea: Tarea) {
+        subAlternos.any {  tarea.puedeSerRealizada(it)}
+    }
+
+}
+class Soldado : Rol() {
     val arma = String()
 
     override fun fuerza(minion: Minion): Int {
@@ -24,31 +45,7 @@ object Soldado : Rol() {
 
 }
 
-open class  Obrero : Rol() {
-    override var herramientas =  mutableListOf<String>("pala","serrucho","martillo","destornillador")
-    override fun defender(minion: Minion) {
-        this.perderlaMitadDeLaEstamina(minion)
-    }
-    fun perderlaMitadDeLaEstamina(minion: Minion) {
-        minion.disminuirEstamina((minion.estamina / 2))
-    }
-}
 
-
-object Capataz: Obrero() {
-    val subAlternos = mutableListOf<Minion>()
-    fun realizarTarea(unaTarea: Tarea){
-        // unaTarea.realizarsePor(this.?seleccionarElMejor())
-
-    }
-    fun seleccionarElMejor() = subAlternos.maxBy{ it.experiencia() }
-    fun empladosPuedenHacerla(tarea: Tarea) {
-        subAlternos.any {  tarea.puedeSerRealizada(it)}
-    }
-
-}
-
-
-object Limpiador : Rol() {
+class Limpiador : Rol() {
     override fun defender(minion: Minion) = throw Exception("Me niego")
 }
