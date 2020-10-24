@@ -5,7 +5,6 @@ import kotlin.properties.Delegates
 abstract class Rol() {
 
     open var herramientas = mutableListOf<String>()
-    abstract fun puedeRealizarTarea(tarea: Tarea):Boolean
 
 
     open fun fuerza(minion: Minion) = (minion.estamina/2) + 2
@@ -15,10 +14,6 @@ abstract class Rol() {
 open class Obrero() : Rol() {
 
     override var herramientas =  mutableListOf<String>("pala","serrucho","martillo","destornillador")
-
-    // hay q pasar tota la logica de tarea a rol
-    override fun puedeRealizarTarea(tarea: Tarea) = true
-
 
 
     override fun defender(minion: Minion) {
@@ -47,8 +42,6 @@ class Soldado : Rol() {
 
     val arma = String()
 
-    // pasar toda la logica de tarea a rol. Decidir cual dejar
-    override fun puedeRealizarTarea(tarea: Tarea) = true
 
     override fun fuerza(minion: Minion): Int {
         return super.fuerza(minion) + danioExtra
@@ -60,8 +53,7 @@ class Soldado : Rol() {
     }
 }
 
-class Limpiador : Rol() {
+object Limpiador : Rol() {
 
     override fun defender(minion: Minion) = throw Exception("Me niego")
-    override fun puedeRealizarTarea(tarea: Tarea) = true
 }
