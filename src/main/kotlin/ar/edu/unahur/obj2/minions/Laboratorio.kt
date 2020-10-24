@@ -1,7 +1,6 @@
 package ar.edu.unahur.obj2.minions
 
 
-
 class Laboratorio(){
 
 
@@ -22,7 +21,7 @@ class Laboratorio(){
 
     // recorre la lista de tareas con el empleado(si existe) que puede resolverlas
     fun jonadaLaboral() {
-        if (hayTareasPendientes()) tareasPendientes.map { siAlgunoPuedeLoHace(it) }
+        if (hayTareasPendientes()) tareasPendientes.forEach { siAlgunoPuedeLoHace(it) }
         else throw Exception("No hay tareas pendientes")
     }
 
@@ -42,6 +41,7 @@ class Laboratorio(){
     // la tarea es realizada por el que puede
     fun realizarTarea(tarea: Tarea) = this.empleadoCapaz(tarea)?.let { tarea.realizarLaTarea(it) }
 
+
     fun hayTareasPendientes() = tareasPendientes.isNotEmpty()
 
     // trae al empleado capaz
@@ -49,11 +49,6 @@ class Laboratorio(){
 
     // existe alguien capaz?
     fun algunoCapaz(tarea: Tarea) = empleados.any { tarea.puedeSerRealizada(it) }
-
-
-
-
-
 
 
 }

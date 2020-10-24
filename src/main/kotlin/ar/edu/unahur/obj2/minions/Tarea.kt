@@ -30,6 +30,7 @@ class DefenderSector(val sector: Sector) : Tarea(){
 
     override var dificultad = sector.gradoDeAmenaza
     // diferente para ciclope y biclope
+
     override fun realizarLaTarea(minion: Minion) {
         if (this.puedeSerRealizada(minion)){
             minion.defender(sector)

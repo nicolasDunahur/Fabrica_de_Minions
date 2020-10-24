@@ -25,9 +25,7 @@ class MinionTest : DescribeSpec({
   }
 
 
-  describe("minion  come fruta para recuperar energia") {
-
-
+  describe("1. minion come fruta para recuperar energia") {
 
     it("empleado come uva ") {
       empleadoCiclope.comerFruta(Uva)
@@ -50,98 +48,159 @@ class MinionTest : DescribeSpec({
       empleadoCiclope.estamina.shouldBe(150)
       empleadoBiclope.estamina.shouldBe(10)
     }
-    describe("experiencia que tiene los empleados por realizar tareas") {
+  }
 
+  describe("2. Experiencia que tiene los empleados por realizar tareas") {
 
-      it("total de experiencia adquirida por el empleadoBiclope") {
+    it("total de experiencia adquirida por el empleadoBiclope") {
         empleadoBiclope.experiencia().shouldBe(0)
-
-      }
-      it("experiencia del ciclope, realizo 2 tareas de reparacion") {
-        empleadoCiclope.experiencia().shouldBe(40)
-
-      }
+     }
+    it("experiencia del ciclope, realizo 2 tareas de reparacion") {
+       empleadoCiclope.experiencia().shouldBe(40)
     }
-    describe(" fuerza de los empleados"){
+  }
 
-      val ciclopeObrero = Ciclople(obrero,50)
+  describe(" Fuerza de los empleados"){
 
-      it("fuerza de los empleados con rol obrero"){
+    val ciclopeObrero = Ciclople(obrero,50)
 
-        empleadoBiclope.fuerza().shouldBe(2)
-        ciclopeObrero.fuerza().shouldBe(13)
-      }
-      it("fuerza de los empleados con rol Soldado"){
-        laboratorio.asignarRol(ciclopeObrero,soldado)
-        soldado.danioExtra = 4
+    it("fuerza de los empleados con rol obrero"){
 
-        ciclopeObrero.fuerza().shouldBe(15)
-
-      }
+      empleadoBiclope.fuerza().shouldBe(2)
+      ciclopeObrero.fuerza().shouldBe(13)
     }
+    it("fuerza de los empleados con rol Soldado"){
+      laboratorio.asignarRol(ciclopeObrero,soldado)
+      soldado.danioExtra = 4
 
-    describe("si lo empleados pueden realizar las tareas asignadas") {
+      ciclopeObrero.fuerza().shouldBe(15)
+
+    }
+  }
+
+  describe("3. Si el empleado PUEDE realizar una tarea") {
+
+    describe("Reparacion") {
       val pc = ArreglarMaquina(mutableListOf("cd", "tester"), 5)
+      val maquina = ArreglarMaquina(mutableListOf(), 25)
 
       it("empleado ciclope no puede realizar tarea de reparacion, no tiene la herramientas necesarias ") {
         empleadoCiclope.puedeRealizarTarea(pc).shouldBeFalse()
       }
-
-      val maquina = ArreglarMaquina(mutableListOf(), 25)
-
       it("empleadoCiclope puede realizar tarea de raparacion ") {
-
         empleadoCiclope.puedeRealizarTarea(maquina).shouldBeTrue()
       }
+    }
 
+    describe("Defensa") {
       describe("si el empleado puede defender el sector") {
-        val sectorA = Sector(true,false,20)
+        val sectorA = Sector(true, false, 20)
         val defensa = DefenderSector(sectorA)
-        val obreroBiclope = Biclope(obrero , 10)
-        val obreroCicople = Ciclople(obrero,100)
+        val obreroBiclope = Biclope(obrero, 10)
+        val obreroCicople = Ciclople(obrero, 100)
 
-        describe(" el empleado no puede realizar la tarea ,el empleado ahora tiene rol limpiador"){
-
-          laboratorio.asignarRol(empleadoBiclope,limpiador)
-
-          it("no puede defender"){
+        describe("El empleado no puede defender,ya que es LIMPIADOR") {
+          laboratorio.asignarRol(empleadoBiclope, limpiador)
+          it("no puede defender") {
             empleadoBiclope.puedeRealizarTarea(defensa).shouldBeFalse()
           }
         }
-        describe("empleados con rol de Obreros"){
 
-          it("pueden defender el sector"){
-
+        describe("empleados OBRERO") {
+          it("pueden defender el sector") {
             defensa.puedeSerRealizada(obreroBiclope).shouldBeFalse()
-
             defensa.puedeSerRealizada(obreroCicople).shouldBeTrue()
           }
         }
-        describe("empleados con rol soldado"){
-          laboratorio.asignarRol(empleadoBiclope,soldado)
-          laboratorio.asignarRol(empleadoCiclope,soldado)
 
-          it( "el empleado no pude realizar la tarea de defender el sector"){
+        describe("empleados SOLDADO") {
+          laboratorio.asignarRol(empleadoBiclope, soldado)
+          laboratorio.asignarRol(empleadoCiclope, soldado)
+
+          it("el empleado no pude realizar la tarea de defender el sector") {
             obreroBiclope.puedeRealizarTarea(defensa).shouldBeFalse()
           }
-          it("el empleado si puede realizar la tarea de defenser el sector "){
-
+          it("el empleado si puede realizar la tarea de defenser el sector ") {
             obreroCicople.puedeRealizarTarea(defensa).shouldBeTrue()
           }
         }
       }
-      val capataz = Capataz()
-      describe("nuevo rol capataz"){
-        val empleadoCapataz = Ciclople(capataz,100)
-        capataz.subAlternos = mutableListOf(empleadoBiclope,empleadoCiclope)
+    }
+    describe("Limpieza"){
+      val banio = Sector(true,false,100)
+      val limpiarbanio = LimpiarSector(banio)
+      val cocina = Sector(false,false,100)
+      val limpiarCocina = LimpiarSector(cocina)
 
+      it("Los limpiadores pueden limpiar siempre"){
+        val MrMusculo = Biclope(limpiador,1)
+        // limpiarbanio.puedeSerRealizada(MrMusculo).shouldBeTrue()
+      }
+      it("No se puede limpiar porque es grande y tiene poca estamina"){
+        val obreroBiclope = Biclope(obrero, 3)
+        limpiarbanio.puedeSerRealizada(obreroBiclope).shouldBeFalse()
+      }
+      it("No se puede limpiar porque es chico y no tiene estamina"){
+        val obreroDebil = Biclope(obrero, 0)
+        limpiarCocina.puedeSerRealizada(obreroDebil).shouldBeFalse()
+      }
+      it("Si se puede limpiar ya que tiene bastante estamina"){
+        val obreroFuerte = Biclope(obrero, 4)
+        limpiarbanio.puedeSerRealizada(obreroFuerte).shouldBeTrue()
+      }
+      it("Si se puede limpiar porque es chico"){
+        val obreroMenosDebil = Biclope(obrero, 1)
+        limpiarCocina.puedeSerRealizada(obreroMenosDebil).shouldBeTrue()
+      }
 
+    }
+  }
+
+  describe("4.Realizar tareas"){
+    describe("Defender"){
+
+      it("Se puede defender"){
+
+      }
+      it("No se puede defender y da error"){
+
+      }
+
+    }
+    describe("Limpiar"){
+
+      it("Se puede limpiar"){
+
+      }
+      it("No se puede limpiar y da error"){
+
+      }
+
+    }
+    describe("Arreglar"){
+
+      it("Se puede arreglar"){
+
+      }
+      it("No se puede arreglar y da error"){
 
       }
 
     }
 
+
+
+
   }
+
+
+
+  describe("5. nuevo rol capataz"){
+    val capataz = Capataz()
+    val empleadoCapataz = Ciclople(capataz,100)
+    capataz.subAlternos = mutableListOf(empleadoBiclope,empleadoCiclope)
+  }
+
   describe("6. Laboratorio - esta en orden"){
     val sector1 = Sector(true,true,0)
     val sector2 = Sector(true,true,0)
@@ -179,14 +238,13 @@ class MinionTest : DescribeSpec({
 
     val laboratorioX= Laboratorio()
 
-
     it("Realizar todas las tareas"){
       laboratorioX.sectores = mutableListOf<Sector>(sector1,sector2,sector3)
       laboratorioX.empleados = mutableListOf<Minion>(obreroBiclope,obreroCicople)
       laboratorioX.tareasPendientes = mutableListOf<Tarea>(defender1,defender2,repararPc,limpiar3)
-
       laboratorioX.jonadaLaboral()
       laboratorioX.tareasPendientes.shouldBeEmpty()
+
     }
     it("No se puede realizar debido a que no hay tareas"){
       laboratorioX.empleados = mutableListOf<Minion>(obreroBiclope,obreroCicople)
@@ -194,7 +252,6 @@ class MinionTest : DescribeSpec({
       shouldThrowAny {
         laboratorioX.jonadaLaboral()
       }
-      
     }
     it("Nadie puede realizar las tareas") {
       laboratorioX.empleados = mutableListOf<Minion>(obreroInutil)
@@ -209,10 +266,11 @@ class MinionTest : DescribeSpec({
       laboratorioX.empleados = mutableListOf<Minion>(obreroBiclope,obreroCicople)
       laboratorioX.tareasPendientes = mutableListOf<Tarea>(defender1,defender2,repararPc,limpiar3,repararReactor)
 
-      //laboratorioX.tareasPendientes.size.shouldBe(1)
       shouldThrowAny {
         laboratorioX.jonadaLaboral()
       }
+      laboratorioX.jonadaLaboral()
+      laboratorioX.tareasPendientes.size.shouldBe(1)
     }
 
 
