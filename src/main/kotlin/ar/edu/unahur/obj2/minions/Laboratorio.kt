@@ -21,8 +21,11 @@ class Laboratorio(){
 
     // recorre la lista de tareas con el empleado(si existe) que puede resolverlas
     fun jonadaLaboral() {
-        if (hayTareasPendientes()) tareasPendientes.forEach { siAlgunoPuedeLoHace(it) }
+        if (hayTareasPendientes()) {
+            tareasPendientes.forEach { siAlgunoPuedeLoHace(it) }
+        }
         else throw Exception("No hay tareas pendientes")
+        removerTareasRealizadas()
     }
 
     // si existe el que pueda resolver una tarea, la hace, se saca de pendientes y
@@ -30,7 +33,6 @@ class Laboratorio(){
     fun siAlgunoPuedeLoHace(tarea: Tarea) {
         if (algunoCapaz(tarea)){
             realizarTarea(tarea)
-            tareasPendientes.remove(tarea)
             empleadoCapaz(tarea)?.agregarTarea(tarea)
         }
         else {
@@ -41,7 +43,6 @@ class Laboratorio(){
     // la tarea es realizada por el que puede
     fun realizarTarea(tarea: Tarea) = this.empleadoCapaz(tarea)?.let { tarea.realizarLaTarea(it) }
 
-
     fun hayTareasPendientes() = tareasPendientes.isNotEmpty()
 
     // trae al empleado capaz
@@ -50,6 +51,7 @@ class Laboratorio(){
     // existe alguien capaz?
     fun algunoCapaz(tarea: Tarea) = empleados.any { tarea.puedeSerRealizada(it) }
 
+    fun removerTareasRealizadas()= tareasPendientes.removeIf { it.pendiente == false }
 
 }
 

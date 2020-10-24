@@ -145,6 +145,7 @@ class MinionTest : DescribeSpec({
       }
       it("No se puede limpiar porque es chico y no tiene estamina") {
         val obreroDebil = Biclope(obrero, 0)
+        //obreroDebil.rol.puedeRealizarTarea(limpiarCocina).shouldBeTrue()
         limpiarCocina.puedeSerRealizada(obreroDebil).shouldBeFalse()
       }
       it("Si se puede limpiar ya que tiene bastante estamina") {
@@ -164,6 +165,8 @@ class MinionTest : DescribeSpec({
   val obreroCicople = Ciclople(obrero, 100)
 
   describe("4.Realizar tareas") {
+
+    // chequear consecuencias
     describe("Defender") {
 
       it("Se puede defender") {
@@ -254,7 +257,8 @@ class MinionTest : DescribeSpec({
     it("Realizar todas las tareas") {
       laboratorioX.sectores = mutableListOf<Sector>(sector1, sector2, sector3)
       laboratorioX.empleados = mutableListOf<Minion>(obreroBiclope, obreroCicople)
-      laboratorioX.tareasPendientes = mutableListOf<Tarea>(defender1, defender2, repararPc, limpiar3)
+      laboratorioX.tareasPendientes = mutableListOf<Tarea>(defender1, limpiar3)
+
       laboratorioX.jonadaLaboral()
       laboratorioX.tareasPendientes.shouldBeEmpty()
 
@@ -282,8 +286,9 @@ class MinionTest : DescribeSpec({
       shouldThrowAny {
         laboratorioX.jonadaLaboral()
       }
-      laboratorioX.jonadaLaboral()
-      laboratorioX.tareasPendientes.size.shouldBe(1)
+
+      laboratorioX.tareasPendientes.size.shouldBe(3)
+
     }
 
 
