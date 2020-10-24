@@ -5,6 +5,7 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe
 
 class MinionTest : DescribeSpec({
@@ -205,15 +206,15 @@ class MinionTest : DescribeSpec({
 
     }
 
-
   }
-
-
 
   describe("5. nuevo rol capataz") {
     val capataz = Capataz()
     val empleadoCapataz = Ciclople(capataz, 100)
-    capataz.subAlternos = mutableListOf(empleadoBiclope, empleadoCiclope)
+    capataz.subAlternos = mutableListOf(empleadoBiclope, empleadoCiclope,obreroBiclope,obreroCicople)
+    capataz.subAlternos.size.shouldBe(4)
+    capataz.experienciaCapataza().shouldBe(40)
+
   }
 
   describe("6. Laboratorio - esta en orden") {
@@ -221,19 +222,16 @@ class MinionTest : DescribeSpec({
     val sector2 = Sector(true, true, 0)
     val sector3 = Sector(true, true, 0)
 
-    val obreroBiclope = Biclope(obrero, 10)
-    val obreroCicople = Ciclople(obrero, 100)
 
-    val laboratorioX = Laboratorio()
-    laboratorioX.sectores = mutableListOf<Sector>(sector1, sector2, sector3)
-    laboratorioX.empleados = mutableListOf<Minion>(obreroBiclope, obreroCicople)
+    Laboratorio.sectores = mutableListOf<Sector>(sector1, sector2, sector3)
+    Laboratorio.empleados = mutableListOf<Minion>(obreroBiclope, obreroCicople)
 
     it("Todes contentes, sin amenazas y limpio") {
-      laboratorioX.enOrden().shouldBeTrue()
+      Laboratorio.enOrden().shouldBeTrue()
     }
     it("Infeliz, sin amenazas y limpio") {
       obreroBiclope.estamina = 8
-      laboratorioX.enOrden().shouldBeFalse()
+      Laboratorio.enOrden().shouldBeFalse()
     }
   }
   describe("7. Laboratorio - Jornada Laboral") {
@@ -241,13 +239,11 @@ class MinionTest : DescribeSpec({
     val sector2 = Sector(true, false, 4)
     val sector3 = Sector(true, false, 0)
 
-    val obreroBiclope = Biclope(obrero, 10)
-    val obreroCicople = Ciclople(obrero, 100)
     val obreroInutil = Ciclople(obrero, 1)
 
     val defender1 = DefenderSector(sector1)
     val defender2 = DefenderSector(sector2)
-    val repararPc = ArreglarMaquina(mutableListOf("cd", "tester"), 5)
+
     val limpiar3 = LimpiarSector(sector3)
     val repararReactor = ArreglarMaquina(mutableListOf("escabadientes"), 500000)
 

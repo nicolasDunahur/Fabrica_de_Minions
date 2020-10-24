@@ -29,10 +29,12 @@ class Capataz: Obrero() {
 
     // falta sumar la experiencia
 
+    fun experienciaCapataza() = subAlternos.sumBy { it.experiencia() }
+
     fun seleccionarElMejor() = subAlternos.maxBy{ it.experiencia() }
 
     fun empladosPuedenHacerla(tarea: Tarea) {
-        subAlternos.any {  tarea.puedeSerRealizada(it)}
+        subAlternos.any {  tarea.puedeSerRealizada(it) }
     }
 
 }
