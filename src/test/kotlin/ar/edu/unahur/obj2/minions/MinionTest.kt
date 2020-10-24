@@ -130,6 +130,14 @@ class MinionTest : DescribeSpec({
           }
         }
       }
+      val capataz = Capataz()
+      describe("nuevo rol capataz"){
+        val empleadoCapataz = Ciclople(capataz,100)
+        capataz.subAlternos = mutableListOf(empleadoBiclope,empleadoCiclope)
+
+
+
+      }
 
     }
 
@@ -206,12 +214,7 @@ class MinionTest : DescribeSpec({
         laboratorioX.jonadaLaboral()
       }
     }
-    val capataz = Capataz()
-    describe("nuevo rol capataz"){
-      val empleadoCapataz = Ciclople(capataz,100)
-      empleadoBiclope.rol.subAlternos
 
-    }
 
   }
 

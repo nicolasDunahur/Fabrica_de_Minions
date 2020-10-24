@@ -1,10 +1,11 @@
 package ar.edu.unahur.obj2.minions
 
+import kotlin.properties.Delegates
+
 abstract class Rol() {
 
     open var herramientas = mutableListOf<String>()
-    var danioExtra = 0
-    open var subAlternos = mutableListOf<Minion>()
+
 
     open fun fuerza(minion: Minion) = (minion.estamina/2) + 2
     open fun defender(minion: Minion) {}
@@ -23,15 +24,20 @@ open class Obrero() : Rol() {
 }
 
 class Capataz: Obrero() {
+    lateinit var subAlternos : MutableList<Minion>
 
+    // falta sumar la experiencia
 
     fun seleccionarElMejor() = subAlternos.maxBy{ it.experiencia() }
+
     fun empladosPuedenHacerla(tarea: Tarea) {
         subAlternos.any {  tarea.puedeSerRealizada(it)}
     }
 
 }
 class Soldado : Rol() {
+
+    var danioExtra = 0
 
     val arma = String()
 
