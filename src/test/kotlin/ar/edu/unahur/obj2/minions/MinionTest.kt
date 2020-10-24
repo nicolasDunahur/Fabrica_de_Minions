@@ -125,6 +125,7 @@ class MinionTest : DescribeSpec({
           }
         }
       }
+
     }
     describe("Limpieza"){
       val banio = Sector(true,false,100)
@@ -133,8 +134,9 @@ class MinionTest : DescribeSpec({
       val limpiarCocina = LimpiarSector(cocina)
 
       it("Los limpiadores pueden limpiar siempre"){
-        val MrMusculo = Biclope(limpiador,1)
-        // limpiarbanio.puedeSerRealizada(MrMusculo).shouldBeTrue()
+        val mrMusculo = Biclope(limpiador,1)
+        mrMusculo.rol.puedeRealizarTarea(limpiarCocina).shouldBeTrue()
+        //limpiarbanio.puedeSerRealizada(MrMusculo).shouldBeTrue()
       }
       it("No se puede limpiar porque es grande y tiene poca estamina"){
         val obreroBiclope = Biclope(obrero, 3)
