@@ -165,7 +165,6 @@ class MinionTest : DescribeSpec({
 
   describe("4.Realizar tareas") {
 
-    // chequear consecuencias
     describe("Defender") {
 
       it("Se puede defender") {
@@ -270,6 +269,7 @@ class MinionTest : DescribeSpec({
         Laboratorio.jonadaLaboral()
       }
     }
+    /*
     it("Quedan tareas sin resolver") {
       Laboratorio.sectores = mutableListOf<Sector>(sector1, sector2, sector3)
       Laboratorio.empleados = mutableListOf<Minion>(obreroBiclope, obreroCicople)
@@ -282,7 +282,7 @@ class MinionTest : DescribeSpec({
       Laboratorio.tareasPendientes.size.shouldBe(3)
 
     }
-
+*/
 
   }
 
