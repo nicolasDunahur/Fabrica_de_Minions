@@ -15,7 +15,7 @@ class MinionTest : DescribeSpec({
 
 
   val empleadoBiclope = Biclope(obrero, 0)
-  val empleadoCiclope = Ciclople(obrero, 50)
+  val empleadoCiclope = Ciclople(obrero, 40)
 
   val maquinaQuimica = ArreglarMaquina(mutableListOf("destornillador"), 5)
 

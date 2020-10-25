@@ -9,6 +9,7 @@ abstract class Rol() {
     open fun fuerza(minion: Minion) = (minion.estamina/2) + 2
     open fun defender(minion: Minion) {}
     open fun experienciaDeSubAlternos() = 0
+
 }
 
 open class Obrero() : Rol() {
@@ -34,6 +35,7 @@ class Capataz: Obrero() {
     fun empladosPuedenHacerla(tarea: Tarea) {
         subAlternos.any {  tarea.puedeSerRealizada(it)}
     }
+    fun experienciaCapataza() = subAlternos.sumBy { it.experiencia() }
 
 }
 class Soldado : Rol() {
