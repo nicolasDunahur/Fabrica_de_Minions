@@ -9,6 +9,7 @@ abstract class Rol() {
 
     open fun fuerza(minion: Minion) = (minion.estamina/2) + 2
     open fun defender(minion: Minion) {}
+    abstract fun experienciaDeSubAlternos(): Int
 }
 
 open class Obrero() : Rol() {
