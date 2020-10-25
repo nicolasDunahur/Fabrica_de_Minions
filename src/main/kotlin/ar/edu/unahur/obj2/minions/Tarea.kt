@@ -34,7 +34,12 @@ class ArreglarMaquina(val herramientas: MutableList<String>, val complejidad: In
 class DefenderSector(val sector: Sector) : Tarea(){
 
     override var dificultad = sector.gradoDeAmenaza
-    // diferente para ciclope y biclope
+
+    fun dificultadPorRaza(minion: Minion) = if (minion == Ciclople) dificultad*2
+        else dificultad
+
+    override fun puedeSerRealizada(minion: Minion) =
+            minion.fuerza() >= dificultadPorRaza(minion) && minion.rol != Limpiador
 
     override fun realizarLaTarea(minion: Minion) {
         if (this.puedeSerRealizada(minion)){
@@ -46,8 +51,7 @@ class DefenderSector(val sector: Sector) : Tarea(){
         }
     }
 
-    override fun puedeSerRealizada(minion: Minion) =
-            minion.fuerza() >= dificultad  && minion.rol != Limpiador
+
 
 }
 
