@@ -36,8 +36,8 @@ class DefenderSector(val sector: Sector) : Tarea(){
     override var dificultad = sector.gradoDeAmenaza
 
     fun dificultadPorRaza(minion: Minion) : Int { if (1 == minion.ojos )
-            return  dificultad *2
-        else return dificultad
+        return  dificultad *2
+    else return dificultad
     }
 
     override fun puedeSerRealizada(minion: Minion) =
