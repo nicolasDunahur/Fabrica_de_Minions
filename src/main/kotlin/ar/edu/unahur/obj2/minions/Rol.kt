@@ -6,7 +6,6 @@ abstract class Rol() {
 
     open var herramientas = mutableListOf<String>()
 
-
     open fun fuerza(minion: Minion) = (minion.estamina/2) + 2
     open fun defender(minion: Minion) {}
     open fun experienciaDeSubAlternos() = 0

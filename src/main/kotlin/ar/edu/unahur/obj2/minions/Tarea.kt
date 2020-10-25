@@ -35,8 +35,10 @@ class DefenderSector(val sector: Sector) : Tarea(){
 
     override var dificultad = sector.gradoDeAmenaza
 
-    fun dificultadPorRaza(minion: Minion) = if (minion == Ciclople) dificultad*2
-        else dificultad
+    fun dificultadPorRaza(minion: Minion) : Int { if (1 == minion.ojos )
+        return  dificultad *2
+    else return dificultad
+    }
 
     override fun puedeSerRealizada(minion: Minion) =
             minion.fuerza() >= dificultadPorRaza(minion) && minion.rol != Limpiador
