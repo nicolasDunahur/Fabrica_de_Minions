@@ -3,6 +3,7 @@ package ar.edu.unahur.obj2.minions
 import kotlin.math.min
 
 abstract class Minion(var rol: Rol,var estamina: Int) {
+    abstract val ojos: Int
 
     var tareaRealizadas = mutableListOf<Tarea>()
 
@@ -29,7 +30,7 @@ abstract class Minion(var rol: Rol,var estamina: Int) {
 
 class Biclope(rol: Rol,estamina: Int) : Minion(rol, estamina) {
 
-    val ojos: Int = 2
+    override val ojos: Int = 2
 
     override fun comerFruta(fruta: Fruta){
         estamina = min(10, fruta.energia + estamina)
@@ -39,7 +40,7 @@ class Biclope(rol: Rol,estamina: Int) : Minion(rol, estamina) {
 }
 
 class Ciclople(rol: Rol, estamina: Int) : Minion(rol, estamina) {
-    val ojos: Int = 1
+    override val ojos: Int = 1
 
     override fun comerFruta(fruta: Fruta){
         estamina += fruta.energia
