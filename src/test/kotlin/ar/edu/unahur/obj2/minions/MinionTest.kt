@@ -78,7 +78,6 @@ class MinionTest : DescribeSpec({
     it("fuerza de los empleados con rol Soldado") {
       Laboratorio.asignarRol(ciclopeObrero, soldado)
       soldado.danioExtra = 4
-      soldado.danioExtra.shouldBe(4)
 
       ciclopeObrero.fuerza().shouldBe(15)
 
@@ -172,7 +171,6 @@ class MinionTest : DescribeSpec({
 
       it("Se puede defender") {
         obreroCicople.realizarTarea(defensa)
-        sectorA.gradoDeAmenaza.shouldBe(0)
         sectorA.estaLimpio.shouldBeFalse()
 
       }
@@ -205,6 +203,7 @@ class MinionTest : DescribeSpec({
         shouldThrowAny { empleadoBiclope.realizarTarea(repararMaquina) }
 
       }
+
     }
 
   }
@@ -214,7 +213,7 @@ class MinionTest : DescribeSpec({
     val empleadoCapataz = Ciclople(capataz, 100)
     capataz.subAlternos = mutableListOf(empleadoBiclope, empleadoCiclope,obreroBiclope,obreroCicople)
     capataz.subAlternos.size.shouldBe(4)
-    empleadoCapataz.experiencia().shouldBe(40)
+    capataz.experienciaCapataza().shouldBe(40)
 
   }
 

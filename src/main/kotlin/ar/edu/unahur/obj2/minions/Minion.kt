@@ -9,28 +9,30 @@ abstract class Minion(var rol: Rol,var estamina: Int) {
     open fun comerFruta(fruta:Fruta) {
         estamina += fruta.energia
     }
-    open fun fuerza() = (estamina / 2) + 2 + rol.IncrementarFuerza(this)
     fun defender(unSector:Sector) { rol.defender(this) }
 
-    fun disminuirEstamina(cuanto: Int) { estamina -= cuanto }
+    fun disminuirEstamina(cuanto: Int) { estamina -= cuanto}
 
 
-    open fun experiencia() = tareaRealizadas.size * tareaRealizadas.sumBy { it -> it.dificultad() } + rol.experienciaDeSubAlternos()
+    open fun experiencia() = tareaRealizadas.size * tareaRealizadas.sumBy { it -> it.dificultad } + rol.experienciaDeSubAlternos()
 
     fun puedeRealizarTarea(tarea: Tarea) = tarea.puedeSerRealizada(this)
     fun realizarTarea(tarea: Tarea) = tarea.realizarLaTarea(this)
 
+    open fun fuerza() = rol.fuerza(this)
 
     fun estaContento() = estamina >= 9
 
     fun agregarTarea(tarea: Tarea) = tareaRealizadas.add(tarea)
 
+/*
+    fun esLimpiador(minion: Minion) =
+            minion.rol == puedeRealizarTarea(this)
 
-
+ */
 }
 
-
- class Biclope(rol: Rol,estamina: Int) : Minion(rol, estamina) {
+class Biclope(rol: Rol,estamina: Int) : Minion(rol, estamina) {
 
     val ojos: Int = 2
 
@@ -39,7 +41,7 @@ abstract class Minion(var rol: Rol,var estamina: Int) {
     }
 
 
- }
+}
 
 class Ciclople(rol: Rol, estamina: Int) : Minion(rol, estamina) {
     val ojos: Int = 1
@@ -47,7 +49,10 @@ class Ciclople(rol: Rol, estamina: Int) : Minion(rol, estamina) {
     override fun comerFruta(fruta: Fruta){
         estamina += fruta.energia
     }
-    override fun fuerza() = super.fuerza() / 2
+    override fun fuerza() = super.fuerza() /2
+
+
+
 }
 
 
