@@ -5,7 +5,6 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldBeEmpty
-import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe
 
 class MinionTest : DescribeSpec({
@@ -15,7 +14,7 @@ class MinionTest : DescribeSpec({
 
 
   val empleadoBiclope = Biclope(obrero, 0)
-  val empleadoCiclope = Ciclople(obrero, 40)
+  val empleadoCiclope = Ciclople(obrero, 50)
 
   val maquinaQuimica = ArreglarMaquina(mutableListOf("destornillador"), 5)
 
