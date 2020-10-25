@@ -4,14 +4,14 @@ abstract class Tarea() {
 
     open var pendiente = true
     fun cumplir() { pendiente = false}
-    abstract var dificultad: Int
+    abstract fun dificultad(): Int
     abstract fun realizarLaTarea(minion: Minion)
     abstract fun puedeSerRealizada(minion: Minion):Boolean
 }
 
 class ArreglarMaquina(val herramientas: MutableList<String>, val complejidad: Int) : Tarea(){
 
-    override var dificultad = complejidad *2
+    override fun dificultad() = complejidad *2
 
     override fun puedeSerRealizada(minion: Minion): Boolean = puedeRepararMaquina(minion)
 
@@ -33,8 +33,7 @@ class ArreglarMaquina(val herramientas: MutableList<String>, val complejidad: In
 
 class DefenderSector(val sector: Sector) : Tarea(){
 
-    override var dificultad = sector.gradoDeAmenaza
-    // diferente para ciclope y biclope
+    override fun dificultad() = sector.gradoDeAmenaza
 
     override fun realizarLaTarea(minion: Minion) {
         if (this.puedeSerRealizada(minion)){
@@ -47,7 +46,7 @@ class DefenderSector(val sector: Sector) : Tarea(){
     }
 
     override fun puedeSerRealizada(minion: Minion) =
-            minion.fuerza() >= dificultad  && minion.rol != Limpiador
+            minion.fuerza() >= dificultad()  && minion.rol != Limpiador
 
 }
 
@@ -55,7 +54,7 @@ object difucultadPorGremio { var dificultad = 10 }
 
 class LimpiarSector(val sector: Sector) : Tarea(){
 
-    override var dificultad = difucultadPorGremio.dificultad
+    override fun dificultad() = difucultadPorGremio.dificultad
 
     override fun puedeSerRealizada(minion: Minion) =
             minion.rol == Limpiador || this.tamanioYEstamina(minion)
@@ -68,14 +67,11 @@ class LimpiarSector(val sector: Sector) : Tarea(){
     override fun realizarLaTarea(minion: Minion) {
         if ( puedeSerRealizada(minion) )  {
             sector.serLimpiado()
-            minion.disminuirEstamina(dificultad)
+            minion.disminuirEstamina(dificultad())
             cumplir()
         }
         else throw Exception (" No le da")
 
-
-        // ya realiza el chequeo
-        // else { this.realizarseSiNoEsLimpiadorYPuede(minion) }
     }
 
 

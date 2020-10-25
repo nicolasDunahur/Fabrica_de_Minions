@@ -20,12 +20,12 @@ object Laboratorio{
 
     // recorre la lista de tareas con el empleado(si existe) que puede resolverlas
     fun jonadaLaboral() {
-        if (hayTareasPendientes()) realizarTareas()
+        if (hayTareasPendientes()) realizarTareasPendientes()
         else throw Exception("No hay tareas pendientes")
         removerTareasRealizadas()
     }
 
-    fun realizarTareas() {
+    fun realizarTareasPendientes() {
         tareasPendientes.forEach { siAlgunoPuedeLoHace(it) }
     }
 
