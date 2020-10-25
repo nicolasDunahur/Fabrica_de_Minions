@@ -17,37 +17,31 @@ class MinionTest : DescribeSpec({
   val empleadoBiclope = Biclope(obrero, 0)
   val empleadoCiclope = Ciclople(obrero, 40)
 
-  val maquinaQuimica = ArreglarMaquina(mutableListOf("destornillador"), 5)
-
-  repeat(2) {
-    Laboratorio.enviarTarea(empleadoCiclope, maquinaQuimica)
-  }
-
-
   describe("1. minion come fruta para recuperar energia") {
 
     it("empleado come uva ") {
       empleadoCiclope.comerFruta(Uva)
       empleadoBiclope.comerFruta(Uva)
 
-      empleadoCiclope.estamina.shouldBe(51)
+      empleadoCiclope.estamina.shouldBe(41)
       empleadoBiclope.estamina.shouldBe(1)
     }
     it("empleado come manzana") {
       empleadoCiclope.comerFruta(Manzana)
       empleadoBiclope.comerFruta(Manzana)
 
-      empleadoCiclope.estamina.shouldBe(55)
+      empleadoCiclope.estamina.shouldBe(45)
       empleadoBiclope.estamina.shouldBe(5)
     }
     it("empleado como bananas") {
       empleadoCiclope.comerFruta(Banana)
       empleadoBiclope.comerFruta(Banana)
 
-      empleadoCiclope.estamina.shouldBe(150)
+      empleadoCiclope.estamina.shouldBe(140)
       empleadoBiclope.estamina.shouldBe(10)
     }
   }
+/*
 
   describe("2. Experiencia que tiene los empleados por realizar tareas") {
 
@@ -159,12 +153,12 @@ class MinionTest : DescribeSpec({
 
     }
   }
-  val sectorA = Sector(true, false, 20)
-  val defensa = DefenderSector(sectorA)
-  val obreroBiclope = Biclope(obrero, 10)
-  val obreroCicople = Ciclople(obrero, 100)
 
   describe("4.Realizar tareas") {
+    val sectorA = Sector(true, false, 20)
+    val defensa = DefenderSector(sectorA)
+    val obreroBiclope = Biclope(obrero, 10)
+    val obreroCicople = Ciclople(obrero, 100)
 
     describe("Defender") {
 
@@ -233,6 +227,7 @@ class MinionTest : DescribeSpec({
       Laboratorio.enOrden().shouldBeFalse()
     }
   }
+
   describe("7. Laboratorio - Jornada Laboral") {
     val sector1 = Sector(true, false, 4)
     val sector2 = Sector(true, false, 4)
@@ -286,7 +281,7 @@ class MinionTest : DescribeSpec({
 */
 
   }
-
+*/
 
 })
 

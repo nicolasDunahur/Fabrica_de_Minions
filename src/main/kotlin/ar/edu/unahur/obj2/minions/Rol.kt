@@ -16,7 +16,6 @@ open class Obrero() : Rol() {
 
     override var herramientas =  mutableListOf<String>("pala","serrucho","martillo","destornillador")
 
-
     override fun defender(minion: Minion) {
         this.perderlaMitadDeLaEstamina(minion)
     }
@@ -28,14 +27,13 @@ open class Obrero() : Rol() {
 class Capataz: Obrero() {
     lateinit var subAlternos : MutableList<Minion>
 
-    // falta sumar la experiencia
+    override fun experienciaDeSubAlternos() = subAlternos.sumBy{ it.experiencia() }
 
     fun seleccionarElMejor() = subAlternos.maxBy{ it.experiencia() }
 
     fun empladosPuedenHacerla(tarea: Tarea) {
         subAlternos.any {  tarea.puedeSerRealizada(it)}
     }
-    fun experienciaCapataza() = subAlternos.sumBy { it.experiencia() }
 
 }
 class Soldado : Rol() {
