@@ -14,7 +14,7 @@ abstract class Minion(var rol: Rol,var estamina: Int) {
     fun disminuirEstamina(cuanto: Int) { estamina -= cuanto}
 
 
-    open fun experiencia() = tareaRealizadas.size * tareaRealizadas.sumBy { it -> it.dificultad } + rol.experienciaDeSubAlternos()
+    open fun experiencia() = tareaRealizadas.size * tareaRealizadas.sumBy { it -> it.dificultad } //+ rol.experienciaDeSubAlternos()
 
     fun puedeRealizarTarea(tarea: Tarea) = tarea.puedeSerRealizada(this)
     fun realizarTarea(tarea: Tarea) = tarea.realizarLaTarea(this)
@@ -25,11 +25,6 @@ abstract class Minion(var rol: Rol,var estamina: Int) {
 
     fun agregarTarea(tarea: Tarea) = tareaRealizadas.add(tarea)
 
-/*
-    fun esLimpiador(minion: Minion) =
-            minion.rol == puedeRealizarTarea(this)
-
- */
 }
 
 class Biclope(rol: Rol,estamina: Int) : Minion(rol, estamina) {
