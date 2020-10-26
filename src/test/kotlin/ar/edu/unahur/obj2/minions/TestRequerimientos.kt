@@ -13,30 +13,30 @@ class TestMinions : DescribeSpec({
     val obrero = Obrero()
     val soldado = Soldado()
 
-    val empleado1 = Ciclople(obrero,50)
-    val empleado2 = Biclope(soldado, 5)
+    val empleadoObrero1 = Ciclople(obrero,50)
+    val empleadoSoldado = Biclope(soldado, 5)
 
     describe(" 1 los minion come fruta para recuperar energia"){
         it(" comer uva"){
-            empleado1.comerFruta(Uva)
-            empleado1.estamina.shouldBe(51)
+            empleadoObrero1.comerFruta(Uva)
+            empleadoObrero1.estamina.shouldBe(51)
 
-            empleado2.comerFruta(Uva)
-            empleado2.estamina.shouldBe(6)
+            empleadoSoldado.comerFruta(Uva)
+            empleadoSoldado.estamina.shouldBe(6)
         }
         it("comer manzana"){
-            empleado1.comerFruta(Manzana)
-            empleado1.estamina.shouldBe(55)
+            empleadoObrero1.comerFruta(Manzana)
+            empleadoObrero1.estamina.shouldBe(55)
 
-            empleado2.comerFruta(Manzana)
-            empleado2.estamina.shouldBe(10)
+            empleadoSoldado.comerFruta(Manzana)
+            empleadoSoldado.estamina.shouldBe(10)
         }
         it("comer banana, el empleado 2 es Biclope ose su maximo de estamina es 10"){
-            empleado1.comerFruta(Banana)
-            empleado1.estamina.shouldBe(150)
+            empleadoObrero1.comerFruta(Banana)
+            empleadoObrero1.estamina.shouldBe(150)
 
-            empleado2.comerFruta(Banana)
-            empleado2.estamina.shouldBe(10)
+            empleadoSoldado.comerFruta(Banana)
+            empleadoSoldado.estamina.shouldBe(10)
         }
     }
     val banio = Sector(true, false, 100)
@@ -51,13 +51,13 @@ class TestMinions : DescribeSpec({
 
     describe("2 experiencia que tienen los empleados al realizar las tareas"){
         it("no tiene ninguna experiencia"){
-            empleado1.experiencia().shouldBe(0)
+            empleadoObrero1.experiencia().shouldBe(0)
         }
         it("el empledo tien experiencia" ){
-            empleado1.puedeRealizarTarea(repararMaquina).shouldBeTrue()
+            empleadoObrero1.puedeRealizarTarea(repararMaquina).shouldBeTrue()
 
-            Laboratorio.enviarTarea(empleado1,repararMaquina )
-            empleado1.experiencia().shouldBe(50)
+            Laboratorio.enviarTarea(empleadoObrero1,repararMaquina )
+            empleadoObrero1.experiencia().shouldBe(50)
         }
 
     }
@@ -67,7 +67,7 @@ class TestMinions : DescribeSpec({
 
         it("fuerza de los empleados con rol obrero") {
 
-            empleado2.fuerza().shouldBe(4)
+            empleadoSoldado.fuerza().shouldBe(4)
             ciclopeObrero.fuerza().shouldBe(13)
         }
         it("fuerza de los empleados con rol Soldado") {
@@ -83,10 +83,10 @@ class TestMinions : DescribeSpec({
         describe("Reparacion") {
 
             it("empleado ciclope no puede realizar tarea de reparacion, no tiene la herramientas necesarias ") {
-                empleado2.puedeRealizarTarea(repararPc).shouldBeFalse()
+                empleadoSoldado.puedeRealizarTarea(repararPc).shouldBeFalse()
             }
             it("empleadoCiclope puede realizar tarea de raparacion ") {
-                empleado1.puedeRealizarTarea(repararMaquina).shouldBeTrue()
+                empleadoObrero1.puedeRealizarTarea(repararMaquina).shouldBeTrue()
             }
         }
 
@@ -100,9 +100,9 @@ class TestMinions : DescribeSpec({
 
 
             describe("El empleado no puede defender,ya que es LIMPIADOR") {
-                Laboratorio.asignarRol(empleado2, Limpiador)
+                Laboratorio.asignarRol(empleadoSoldado, Limpiador)
                 it("no puede defender") {
-                    empleado2.puedeRealizarTarea(defensa).shouldBeFalse()
+                    empleadoSoldado.puedeRealizarTarea(defensa).shouldBeFalse()
                 }
             }
 
@@ -114,8 +114,8 @@ class TestMinions : DescribeSpec({
             }
 
             describe("empleados SOLDADO") {
-                Laboratorio.asignarRol(empleado1, soldado)
-                Laboratorio.asignarRol(empleado2, soldado)
+                Laboratorio.asignarRol(empleadoObrero1, soldado)
+                Laboratorio.asignarRol(empleadoSoldado, soldado)
 
                 it("el empleado no pude realizar la tarea de defender el sector") {
                     obreroBiclope.puedeRealizarTarea(defensa).shouldBeFalse()
@@ -139,7 +139,7 @@ class TestMinions : DescribeSpec({
         }
         it("No se puede limpiar porque es chico y no tiene estamina") {
             val obreroDebil = Biclope(obrero, 0)
-            //obreroDebil.rol.puedeRealizarTarea(limpiarCocina).shouldBeTrue()
+            obreroDebil.puedeRealizarTarea(limpiarCocina).shouldBeFalse()
             limpiarCocina.puedeSerRealizada(obreroDebil).shouldBeFalse()
         }
         it("Si se puede limpiar ya que tiene bastante estamina") {
@@ -154,7 +154,9 @@ class TestMinions : DescribeSpec({
     }
     describe("4.Realizar tareas") {
         val sectorA = Sector(true, false, 20)
-        val defensa = DefenderSector(sectorA)
+        val defensa = DefenderSector(sectorA)        
+        val repararReactor = ArreglarMaquina(mutableListOf("escabadientes"), 500000)
+
         val obreroBiclope = Biclope(obrero, 3)
         val obreroCicople = Ciclople(obrero, 160)
 
@@ -179,16 +181,17 @@ class TestMinions : DescribeSpec({
 
             }
             it("No se puede limpiar y da error") {
+                val empleado3 = Ciclople(soldado, 0)
 
-                //shouldThrowAny { obreroBiclope.realizarTarea(limpiarCocina) }
+                shouldThrowAny { empleado3.realizarTarea(limpiarCocina) }
 
             }
         }
         describe("Arreglar") {
 
             it("Se puede arreglar") {
-                empleado1.realizarTarea(repararMaquina)
-                empleado1.estamina.shouldBe(25)
+                empleadoObrero1.realizarTarea(repararMaquina)
+                empleadoObrero1.estamina.shouldBe(25)
 
             }
             it("No se puede arreglar y da error") {
@@ -204,10 +207,14 @@ class TestMinions : DescribeSpec({
     describe("5. nuevo rol capataz") {
         val capataz = Capataz()
         val empleadoCapataz = Ciclople(capataz, 100)
-        capataz.subAlternos = mutableListOf(empleado1, empleado2,obreroBiclope,obreroCicople)
+        capataz.subAlternos = mutableListOf(empleadoObrero1, empleadoSoldado,obreroBiclope,obreroCicople)
+
+        Laboratorio.enviarTarea(empleadoObrero1,repararMaquina)
+        Laboratorio.enviarTarea(empleadoSoldado,limpiarbanio)
+
 
         capataz.subAlternos.size.shouldBe(4)
-        empleadoCapataz.experiencia().shouldBe(40)
+        empleadoCapataz.experiencia().shouldBe(60)
 
     }
 
@@ -239,7 +246,6 @@ class TestMinions : DescribeSpec({
         val defender2 = DefenderSector(sector2)
 
         val limpiar3 = LimpiarSector(sector3)
-        val repararReactor = ArreglarMaquina(mutableListOf("escabadientes"), 500000)
 
         it("Realizar todas las tareas") {
             Laboratorio.sectores = mutableListOf<Sector>(sector1, sector2, sector3)

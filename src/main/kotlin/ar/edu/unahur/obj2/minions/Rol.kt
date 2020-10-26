@@ -27,7 +27,7 @@ open class Obrero() : Rol() {
 class Capataz: Obrero() {
     lateinit var subAlternos : MutableList<Minion>
 
-    override fun experienciaDeSubAlternos() = 40 //subAlternos.sumBy{ it.experiencia() }
+    override fun experienciaDeSubAlternos() = subAlternos.sumBy{ it.experiencia() }
 
     fun seleccionarElMejor() = subAlternos.maxBy{ it.experiencia() }
 
