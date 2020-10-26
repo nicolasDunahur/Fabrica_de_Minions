@@ -5,7 +5,7 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldBeEmpty
-import io.kotest.matchers.collections.shouldContainAll
+import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 
 class TestMinions : DescribeSpec({
@@ -264,6 +264,18 @@ class TestMinions : DescribeSpec({
             shouldThrowAny {
                 Laboratorio.jonadaLaboral()
             }
+        }
+        it("Tareas realizadas parcialmente") {
+            val limpiador = Biclope(Limpiador,100)
+            Laboratorio.empleados = mutableListOf<Minion>(obreroInutil,limpiador)
+            Laboratorio.tareasPendientes = mutableListOf<Tarea>(limpiar3,defender1, defender2, repararPc)
+
+            shouldThrowAny {
+                Laboratorio.jonadaLaboral()
+                Laboratorio.tareasPendientes.shouldHaveSize(3)
+            }
+
+
         }
     }
 
