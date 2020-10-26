@@ -5,6 +5,7 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
 
 class TestMinions : DescribeSpec({
@@ -204,8 +205,9 @@ class TestMinions : DescribeSpec({
         val capataz = Capataz()
         val empleadoCapataz = Ciclople(capataz, 100)
         capataz.subAlternos = mutableListOf(empleado1, empleado2,obreroBiclope,obreroCicople)
+
         capataz.subAlternos.size.shouldBe(4)
-        capataz.experienciaCapataz().shouldBe(40)
+        empleadoCapataz.experiencia().shouldBe(40)
 
     }
 
@@ -264,6 +266,7 @@ class TestMinions : DescribeSpec({
             }
         }
     }
+
 
 
 
