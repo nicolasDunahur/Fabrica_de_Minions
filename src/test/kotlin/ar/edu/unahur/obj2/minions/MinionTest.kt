@@ -5,6 +5,7 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe
 
 class MinionTest : DescribeSpec({
@@ -14,8 +15,7 @@ class MinionTest : DescribeSpec({
 
 
   val empleadoBiclope = Biclope(obrero, 0)
-  val empleadoCiclope = Ciclople(obrero, 50)
-  val empleado2 = Ciclople(obrero,50)
+  val empleadoCiclope = Ciclople(obrero, 40)
 
   val maquinaQuimica = ArreglarMaquina(mutableListOf("destornillador"), 5)
 
@@ -27,24 +27,24 @@ class MinionTest : DescribeSpec({
   describe("1. minion come fruta para recuperar energia") {
 
     it("empleado come uva ") {
+      empleadoCiclope.comerFruta(Uva)
       empleadoBiclope.comerFruta(Uva)
-      empleado2.comerFruta(Uva)
 
-      empleado2.estamina.shouldBe(51)
+      empleadoCiclope.estamina.shouldBe(51)
       empleadoBiclope.estamina.shouldBe(1)
     }
     it("empleado come manzana") {
-      empleado2.comerFruta(Manzana)
+      empleadoCiclope.comerFruta(Manzana)
       empleadoBiclope.comerFruta(Manzana)
 
-      empleado2.estamina.shouldBe(55)
+      empleadoCiclope.estamina.shouldBe(55)
       empleadoBiclope.estamina.shouldBe(5)
     }
     it("empleado como bananas") {
-      empleado2.comerFruta(Banana)
+      empleadoCiclope.comerFruta(Banana)
       empleadoBiclope.comerFruta(Banana)
 
-      empleado2.estamina.shouldBe(150)
+      empleadoCiclope.estamina.shouldBe(150)
       empleadoBiclope.estamina.shouldBe(10)
     }
   }
@@ -89,10 +89,10 @@ class MinionTest : DescribeSpec({
     describe("Reparacion") {
       
       it("empleado ciclope no puede realizar tarea de reparacion, no tiene la herramientas necesarias ") {
-        empleado2.puedeRealizarTarea(repararPc).shouldBeFalse()
+        empleadoCiclope.puedeRealizarTarea(repararPc).shouldBeFalse()
       }
       it("empleadoCiclope puede realizar tarea de raparacion ") {
-        empleado2.puedeRealizarTarea(repararMaquina).shouldBeTrue()
+        empleadoCiclope.puedeRealizarTarea(repararMaquina).shouldBeTrue()
       }
     }
 
@@ -120,7 +120,7 @@ class MinionTest : DescribeSpec({
 
         describe("empleados SOLDADO") {
           Laboratorio.asignarRol(empleadoBiclope, soldado)
-          Laboratorio.asignarRol(empleado2, soldado)
+          Laboratorio.asignarRol(empleadoCiclope, soldado)
 
           it("el empleado no pude realizar la tarea de defender el sector") {
             obreroBiclope.puedeRealizarTarea(defensa).shouldBeFalse()
@@ -194,8 +194,8 @@ class MinionTest : DescribeSpec({
     describe("Arreglar") {
 
       it("Se puede arreglar") {
-        empleado2.realizarTarea(repararMaquina)
-        empleado2.estamina.shouldBe(25)
+        empleadoCiclope.realizarTarea(repararMaquina)
+        empleadoCiclope.estamina.shouldBe(25)
 
       }
       it("No se puede arreglar y da error") {
@@ -210,9 +210,9 @@ class MinionTest : DescribeSpec({
   describe("5. nuevo rol capataz") {
     val capataz = Capataz()
     val empleadoCapataz = Ciclople(capataz, 100)
-    capataz.subAlternos = mutableListOf(empleadoBiclope, empleado2,obreroBiclope,obreroCicople)
+    capataz.subAlternos = mutableListOf(empleadoBiclope, empleadoCiclope,obreroBiclope,obreroCicople)
     capataz.subAlternos.size.shouldBe(4)
-    capataz.experienciaCapataza().shouldBe(40)
+    capataz.experienciaCapataz().shouldBe(40)
 
   }
 

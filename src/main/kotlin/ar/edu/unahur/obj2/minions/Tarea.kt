@@ -11,7 +11,7 @@ abstract class Tarea() {
 
 class ArreglarMaquina(val herramientas: MutableList<String>, val complejidad: Int) : Tarea(){
 
-    override var dificultad = complejidad *2
+    override var dificultad = complejidad * 2
 
     override fun puedeSerRealizada(minion: Minion): Boolean = puedeRepararMaquina(minion)
 
@@ -36,7 +36,7 @@ class DefenderSector(val sector: Sector) : Tarea(){
     override var dificultad = sector.gradoDeAmenaza
 
     fun dificultadPorRaza(minion: Minion) : Int { if (1 == minion.ojos )
-        return  dificultad *2
+        return  dificultad * 2
     else return dificultad
     }
 

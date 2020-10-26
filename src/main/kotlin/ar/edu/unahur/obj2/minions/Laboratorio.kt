@@ -12,6 +12,7 @@ object Laboratorio{
     fun enviarTarea(minion: Minion, tarea: Tarea) {
         if (tarea.puedeSerRealizada(minion)) {
             tarea.realizarLaTarea(minion)
+            minion.tareaRealizadas.add(tarea)
             tareasPendientes.remove(tarea)
         }
         else throw Exception("no puede realizarla la tarea no cumple con los requisitos....")
