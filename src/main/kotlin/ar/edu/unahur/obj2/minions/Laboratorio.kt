@@ -1,8 +1,5 @@
 package ar.edu.unahur.obj2.minions
 
-import javax.management.openmbean.OpenMBeanInfo
-
-
 object Laboratorio{
 
     var empleados = mutableListOf<Minion>()
