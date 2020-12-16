@@ -14,7 +14,9 @@ abstract class Rol() {
 
 open class Obrero() : Rol() {
 
-    override var herramientas =  mutableListOf<String>("pala","serrucho","martillo","destornillador")
+    // No está bien que la lista arranque con herramientas, deberían configurarse para cada obrero.
+    // "pala","serrucho","martillo","destornillador"
+    override var herramientas =  mutableListOf<String>()
 
     override fun defender(minion: Minion) {
         this.perderlaMitadDeLaEstamina(minion)
@@ -27,8 +29,9 @@ open class Obrero() : Rol() {
 class Capataz: Obrero() {
     lateinit var subAlternos : MutableList<Minion>
 
+    // No está mal, aunque hubiera sido mejor delegar el método experiencia directamente en los roles.
     override fun experienciaDeSubAlternos() = subAlternos.sumBy{ it.experiencia() }
-
+     // ver todo, no se usa
     fun seleccionarElMejor() = subAlternos.maxBy{ it.experiencia() }
 
     fun empladosPuedenHacerla(tarea: Tarea) {
@@ -53,6 +56,4 @@ class Soldado : Rol() {
 }
 
 object Limpiador : Rol() {
-
-    override fun defender(minion: Minion) = throw Exception("Me niego")
 }

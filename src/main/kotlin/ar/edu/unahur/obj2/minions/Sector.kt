@@ -6,6 +6,8 @@ class Sector(var esGrande: Boolean, var estaLimpio: Boolean,var gradoDeAmenaza: 
         gradoDeAmenaza = 0
         estaLimpio = false
     }
-    fun serLimpiado() = estaLimpio == true
+    fun serLimpiado() {
+        estaLimpio = true
+    }
     fun tieneAmenaza()= gradoDeAmenaza == 0
 }

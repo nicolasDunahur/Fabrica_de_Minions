@@ -3,6 +3,7 @@ package ar.edu.unahur.obj2.minions
 import kotlin.math.min
 
 abstract class Minion(var rol: Rol, var estamina: Int) {
+
     abstract val ojos: Int
 
     var tareaRealizadas = mutableListOf<Tarea>()
@@ -24,9 +25,11 @@ abstract class Minion(var rol: Rol, var estamina: Int) {
     open fun experiencia() = (tareaRealizadas.size * tareaRealizadas.sumBy { it -> it.dificultad } )+ rol.experienciaDeSubAlternos()
 
     fun puedeRealizarTarea(tarea: Tarea) = tarea.puedeSerRealizada(this)
+
+    // Este método debería ser el que agregue la tarea al Minion, no uno del Laboratorio.
     fun realizarTarea(tarea: Tarea) = tarea.realizarLaTarea(this)
 
-    open fun fuerza() = (estamina / 2) + 2 + rol.IncrementarFuerza(this)
+    open fun fuerzaAdicional() = (estamina / 2) + 2 + rol.IncrementarFuerza(this)
 
     fun estaContento() = estamina >= 9
 
@@ -45,6 +48,5 @@ class Biclope(rol: Rol,estamina: Int) : Minion(rol, estamina) {
 
 class Ciclople(rol: Rol, estamina: Int) : Minion(rol, estamina) {
     override val ojos: Int = 1
-    override fun fuerza() = super.fuerza() /2
-
+    override fun fuerzaAdicional() = super.fuerzaAdicional() /2
 }

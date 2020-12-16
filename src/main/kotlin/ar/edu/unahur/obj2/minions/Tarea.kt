@@ -8,7 +8,7 @@ abstract class Tarea() {
     abstract fun realizarLaTarea(minion: Minion)
     abstract fun puedeSerRealizada(minion: Minion):Boolean
 }
-
+// Sería mejor un método que reciba al minion por parámetro, como hicieron en defender sector.
 class ArreglarMaquina(val herramientas: MutableList<String>, val complejidad: Int) : Tarea(){
 
     override var dificultad = complejidad * 2
@@ -24,6 +24,7 @@ class ArreglarMaquina(val herramientas: MutableList<String>, val complejidad: In
         noPendiente()
     }
 
+    // Hubiese sido mejor hacer el if en el Minion, así no lo tenían que repetir en cada tarea.
     override fun realizarLaTarea(minion: Minion) {
         if (puedeSerRealizada(minion)) repararMaquina(minion)
         else throw Exception("esta tarea no puede ser realizada...")
@@ -35,14 +36,19 @@ class DefenderSector(val sector: Sector) : Tarea(){
 
     override var dificultad = sector.gradoDeAmenaza
 
+    // Esto está mal, porque si uno pregunta la dificultad de la tarea va a devolver siempre lo mismo.
+    // El método dificultadPorRaza deberia haber estado también en las demás tareas para que quede polimórfico.
+
     fun dificultadPorRaza(minion: Minion) : Int { if (1 == minion.ojos )
         return  dificultad * 2
     else return dificultad
     }
 
     override fun puedeSerRealizada(minion: Minion) =
-        minion.fuerza() >= dificultadPorRaza(minion) && minion.rol != Limpiador
+        minion.fuerzaAdicional() >= dificultadPorRaza(minion) && minion.rol != Limpiador
 
+    // Esto está mal, la estamina dependía del sector, no de la dificultad.
+    // Además, el limpiador no tenía que perder nada de estamina.
     override fun realizarLaTarea(minion: Minion) {
         if (this.puedeSerRealizada(minion)){
             minion.defender(sector)
